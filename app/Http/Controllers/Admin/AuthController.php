@@ -24,7 +24,10 @@ class AuthController extends Controller
             'password'=>'required'
         ]);
         $user = User::where('email',$request->email)->get()->first();
-        if (!Hash::check($request->password, $user->password))
+        if (empty($user)) {
+            return back()->with('error','This Acc is Not Admin!');
+        }
+        elseif (!Hash::check($request->password, $user->password))
         {
             return back()->with('error','The Credentials Does Not Match!');
         }
@@ -32,10 +35,5 @@ class AuthController extends Controller
         return to_route('admin.dashboard')->with('success','Successfully Logged In');
     }
 
-    //logout
-    public function logout(Request $request)
-    {
-        Auth::logout(auth()->user());
-        return to_route('welcome');
-    }
+
 }
