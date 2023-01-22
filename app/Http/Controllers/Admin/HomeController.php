@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Disease;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Permission;
 
 class HomeController extends Controller
 {
@@ -14,13 +15,20 @@ class HomeController extends Controller
         return view('Admin.dashboard');
     }
 
-    //diseases
+    //mainDiseases
     public function diseases(Request $request)
     {
         $mainDiseases = Disease::onlyParent()
                         ->orderBy('id','desc')
                         ->with('media','children')
                         ->get();
-        return view('Admin.nav-section.diseases.index',compact('mainDiseases'));
+        return view('Admin.nav-section.diseases.mainDiseases.index',compact('mainDiseases'));
+    }
+
+    //permissions
+    public function permissions(Request $request)
+    {
+        $permissions = Permission::all();
+        return view('Admin.nav-section.userManagement.permissions.index',compact('permissions'));
     }
 }

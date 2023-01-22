@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DiseaseController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\PermissionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -39,12 +40,22 @@ Route::prefix('admin')
     ->group(function(){
         Route::get('/dashboard','dashboard')->name('admin.dashboard');
         Route::get('/diseases','diseases')->name('admin.diseases');
+        Route::get('/permissions','permissions')->name('admin.permissions');
     });
 
     Route::controller(DiseaseController::class)
     ->middleware('adminAuthenticated')
     ->group(function(){
 
+    });
+
+    Route::controller(PermissionController::class)
+    ->middleware('adminAuthenticated')
+    ->prefix('permissions')
+    ->group(function(){
+        Route::get('/create','create')->name('admin.permissions.create');
+        Route::post('/create','store');
+        Route::get('/{id}','destory');
     });
 
 });
