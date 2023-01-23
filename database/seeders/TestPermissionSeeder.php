@@ -19,10 +19,12 @@ class TestPermissionSeeder extends Seeder
             'role-create',
             'role-edit',
             'role-delete',
-            'permission-list',
             'permission-create',
             'permission-edit',
             'permission-delete',
+            'user-create',
+            'user-edit',
+            'user-delete',
         ];
 
         foreach ($permissions as $permission) {

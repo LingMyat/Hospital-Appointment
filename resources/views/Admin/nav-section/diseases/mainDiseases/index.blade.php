@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <h4 class=" d-inline-block">Main Diseases</h4>
-                        <a class="btn float-end btn-sm btn-gradient-info btn-icon-text" href="">
+                        <a class="btn float-end btn-sm btn-inverse-primary btn-icon-text" href="">
                             <i class="mdi mdi-plus-circle"></i>
                             Add
                         </a>
@@ -63,9 +63,8 @@
                                             {!! getStatusBadge($mainDisease->status) !!}
                                         </td>
                                         <td class=" ">
-                                            <a class="text-secondary" href=""><i
-                                                    class="mdi mdi-pencil-box-outline h4"></i></a>
-                                            <a class="text-secondary" href=""><i
+                                            <a class="" href=""><i class="mdi mdi-square-edit-outline h4"></i></a>
+                                            <a class="text-danger" href=""><i
                                                     class="mdi mdi-delete-forever h4"></i></a>
                                         </td>
                                     </tr>

@@ -20,11 +20,11 @@
 @endsection
 @section('content')
     <div class="page-header">
-        <h3 class="page-title">Permissions</h3>
+        <h3 class="page-title">Roles</h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">Users Management</li>
-                <li class="breadcrumb-item active" aria-current="page">Permissions</li>
+                <li class="breadcrumb-item active" aria-current="page">Roles</li>
             </ol>
         </nav>
     </div>
@@ -33,9 +33,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
-                        <h4 class=" d-inline-block">All Permissions</h4>
-                        @can('permission-create')
-                            <a class="btn float-end btn-sm btn-inverse-primary btn-icon-text" href="{{ route('admin.permission.create') }}">
+                        <h4 class=" d-inline-block">All Roles</h4>
+                        @can('role-create')
+                            <a class="btn float-end btn-sm btn-inverse-primary btn-icon-text" href="{{ route('admin.role.create') }}">
                                 <i class="mdi mdi-plus-circle"></i>
                                 Add
                             </a>
@@ -46,22 +46,22 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Permission Name</th>
+                                    <th>Role Name</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($permissions as $key=>$permission)
+                                @foreach ($roles as $key=>$role)
                                     <tr>
                                         <td>{{ $key+=1 }}</td>
-                                        <td>{{ $permission->name }}</td>
+                                        <td>{{ $role->name }}</td>
                                         <td>
-                                            @can('permission-edit')
-                                                <a class="" href="{{ route('admin.permission.edit',$permission->id) }}"><i class="mdi mdi-square-edit-outline h4"></i></a>
+                                            @can('role-edit')
+                                                <a class="" href="{{ route('admin.role.edit',$role->id) }}"><i class="mdi mdi-square-edit-outline h4"></i></a>
                                             @endcan
-                                            @can('permission-delete')
+                                            @can('role-delete')
                                                 <a class="text-danger delete_data_btn"
-                                                href="{{ route('admin.permission.destroy',$permission->id) }}"
+                                                href="{{ route('admin.role.destroy',$role->id) }}"
                                                 ><i class="mdi mdi-delete-forever h4"></i></a>
                                             @endcan
                                         </td>

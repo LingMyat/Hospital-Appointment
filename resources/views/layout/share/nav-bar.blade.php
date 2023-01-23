@@ -66,8 +66,8 @@
         </a>
         <div class="collapse" id="user_management">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="">Users</a></li>
-            <li class="nav-item"> <a class="nav-link" href="">Roles</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{ route('admin.users') }}">Users</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{ route('admin.roles') }}">Roles</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{ route('admin.permissions') }}">Permissions</a></li>
           </ul>
         </div>

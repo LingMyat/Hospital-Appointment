@@ -1,3 +1,4 @@
+
     {{-- DataTable --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
     <!-- plugins:css -->
@@ -17,6 +18,8 @@
 
     {{-- Toastr Js --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+
 
     <style>
 

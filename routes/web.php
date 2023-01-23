@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DiseaseController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +43,8 @@ Route::prefix('admin')
         Route::get('/dashboard','dashboard')->name('admin.dashboard');
         Route::get('/diseases','diseases')->name('admin.diseases');
         Route::get('/permissions','permissions')->name('admin.permissions');
+        Route::get('/roles','roles')->name('admin.roles');
+        Route::get('/users','users')->name('admin.users');
     });
 
     Route::controller(DiseaseController::class)
@@ -58,6 +62,28 @@ Route::prefix('admin')
         Route::get('/edit/{id}','edit')->name('admin.permission.edit');
         Route::patch('/edit/{id}','update');
         Route::get('/{id}','destroy')->name('admin.permission.destroy');
+    });
+
+    Route::controller(RoleController::class)
+    ->middleware('adminAuthenticated')
+    ->prefix('roles')
+    ->group(function(){
+        Route::get('/create','create')->name('admin.role.create');
+        Route::post('/create','store');
+        Route::get('/edit/{id}','edit')->name('admin.role.edit');
+        Route::patch('/edit/{id}','update');
+        Route::get('/{id}','destroy')->name('admin.role.destroy');
+    });
+
+    Route::controller(UserController::class)
+    ->middleware('adminAuthenticated')
+    ->prefix('users')
+    ->group(function(){
+        Route::get('/create','create')->name('admin.user.create');
+        Route::post('/create','store');
+        Route::get('/edit/{id}','edit')->name('admin.user.edit');
+        Route::patch('/edit/{id}','update');
+        Route::get('/{id}','destroy')->name('admin.user.destroy');
     });
 
 });
