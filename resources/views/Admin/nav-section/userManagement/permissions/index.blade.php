@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <h4 class=" d-inline-block">All Permissions</h4>
-                        <a class="btn float-end btn-sm btn-gradient-info btn-icon-text" href="{{ route('admin.permissions.create') }}">
+                        <a class="btn float-end btn-sm btn-gradient-info btn-icon-text" href="{{ route('admin.permission.create') }}">
                             <i class="mdi mdi-plus-circle"></i>
                             Add
                         </a>
@@ -54,12 +54,12 @@
                                         <td>{{ $key+=1 }}</td>
                                         <td>{{ $permission->name }}</td>
                                         <td>
-                                            <a class="text-secondary" href=""><i class="mdi mdi-pencil-box-outline h4"></i></a>
-                                            <a class="text-secondary delete_data_btn"
-                                            href="javascript:void(0);"
-                                            data-id="{{ $permission->id }}"
-                                            data-url="{{ url('admin/permissions/'.$permission->id)}} "
-                                            ><i class="mdi mdi-delete-forever h4"></i></a>
+                                            <a class="text-secondary" href="{{ route('admin.permission.edit',$permission->id) }}"><i class="mdi mdi-pencil-box-outline h4"></i></a>
+                                            @can('permission-delete')
+                                                <a class="text-secondary delete_data_btn"
+                                                href="{{ route('admin.permission.destroy',$permission->id) }}"
+                                                ><i class="mdi mdi-delete-forever h4"></i></a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
@@ -80,13 +80,7 @@
     <script>
         $(document).ready(function() {
             $('.Datatable').DataTable();
-            $('.delete_data_btn').click(function (e) {
-                e.preventDefault();
-                $.ajax({
-                    type: "GET",
-                    url: $(this).data('url'),
-                });
-            });
+
         });
     </script>
 @endsection

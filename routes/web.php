@@ -53,9 +53,11 @@ Route::prefix('admin')
     ->middleware('adminAuthenticated')
     ->prefix('permissions')
     ->group(function(){
-        Route::get('/create','create')->name('admin.permissions.create');
+        Route::get('/create','create')->name('admin.permission.create');
         Route::post('/create','store');
-        Route::get('/{id}','destory');
+        Route::get('/edit/{id}','edit')->name('admin.permission.edit');
+        Route::patch('/edit/{id}','update');
+        Route::get('/{id}','destroy')->name('admin.permission.destroy');
     });
 
 });
