@@ -23,7 +23,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">Diseses Management</li>
-                <li class="breadcrumb-item active" aria-current="page">Diseases</li>
+                <li class="breadcrumb-item active" aria-current="page">Main Diseases</li>
             </ol>
         </nav>
     </div>
@@ -32,7 +32,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
-                        <h4 class=" d-inline-block">Main Diseases</h4>
+                        <h4 class=" d-inline-block">All Main Diseases</h4>
                         <button class="btn float-end btn-sm btn-inverse-primary btn-icon-text " id="add_btn"
                             data-bs-toggle="modal" data-bs-target="#exampleModal"
                             data-url="{{ route('admin.main-disease.create') }}">

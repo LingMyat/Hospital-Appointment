@@ -42,6 +42,7 @@ Route::prefix('admin')
     ->group(function(){
         Route::get('/dashboard','dashboard')->name('admin.dashboard');
         Route::get('/diseases','diseases')->name('admin.diseases');
+        Route::get('/sub-diseases','subDiseases')->name('admin.sub-diseases');
         Route::get('/permissions','permissions')->name('admin.permissions');
         Route::get('/roles','roles')->name('admin.roles');
         Route::get('/users','users')->name('admin.users');
@@ -58,6 +59,10 @@ Route::prefix('admin')
             Route::get('/{id}','mainDestroy')->name('admin.main-disease.destroy');
         });
 
+        Route::prefix('sub-diseases')
+        ->group(function(){
+            Route::get('/create','subCreate')->name('admin.sub-disease.create');
+        });
     });
 
     Route::controller(PermissionController::class)

@@ -15,6 +15,13 @@ class Disease extends Model
         'deleted_at'
     ];
 
+    protected $hidden = [
+        'status',
+        'deleted_at',
+        'created_at',
+        'updated_at',
+    ];
+
     const UPLOAD_PATH = "upload/diseases";
 
     public function media()
@@ -30,6 +37,15 @@ class Disease extends Model
     public function scopeOnlyParent($query)
     {
         return $query->whereNull('parent_id')->where('parent_id', null);
+    }
+    public function scopeOnlyChildren($query)
+    {
+        return $query->whereNotNull('parent_id')->where('parent_id','!=', null);
+    }
+
+    public function scopePublish($query)
+    {
+        return $query->whereNull('deleted_at')->where('deleted_at', null);
     }
 
     public function parent()

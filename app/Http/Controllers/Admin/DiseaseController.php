@@ -44,8 +44,22 @@ class DiseaseController extends Controller
 
         public function mainDestroy(Request $request,$id)
         {
-            Disease::findOrFail($id)->delete();
+            Disease::findOrFail($id)->update([
+                'status' => false,
+                'deleted_at' => now()
+            ]);
+
             return redirect()->back()->with('success', 'Successfully deleted!');
         }
     // Main Diseases End
+
+    // Sub Diseases Start
+    public function subCreate(Request $request)
+    {
+        $mainDiseases = Disease::publish()
+                        ->onlyParent()
+                        ->with('media','children')
+                        ->get();
+        return view('Admin.share.modal.sub-disease',compact('mainDiseases'));
+    }
 }

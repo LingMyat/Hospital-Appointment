@@ -24,7 +24,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">Diseses Management</li>
-                <li class="breadcrumb-item active" aria-current="page">Diseases</li>
+                <li class="breadcrumb-item active" aria-current="page">Sub Diseases</li>
             </ol>
         </nav>
     </div>
@@ -33,11 +33,22 @@
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
-                        <h4 class=" d-inline-block">Sub Diseases</h4>
-                        <a class="btn float-end btn-sm btn-inverse-primary btn-icon-text" href="">
+                        <h4 class=" d-inline-block">All Sub Diseases</h4>
+                        <button class="btn float-end btn-sm btn-inverse-primary btn-icon-text " id="add_btn"
+                            data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            data-url="{{ route('admin.sub-disease.create') }}">
                             <i class="mdi mdi-plus-circle"></i>
                             Add
-                        </a>
+                        </button>
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content" id="modal-content">
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="">
                         <table class="table table-hover Datatable">
@@ -85,6 +96,21 @@
     <script>
         $(document).ready(function() {
             $('.Datatable').DataTable();
+
+            var get_modal_url = $('#add_btn').data('url')
+
+            $('#add_btn').click(function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: "get",
+                    url: get_modal_url,
+                    success: function(view) {
+                        $('#modal-content').html(view);
+                    }
+                });
+            });
+
         });
     </script>
 @endsection

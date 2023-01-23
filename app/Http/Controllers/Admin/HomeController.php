@@ -20,10 +20,21 @@ class HomeController extends Controller
     //mainDiseases
     public function diseases(Request $request)
     {
-        $mainDiseases = Disease::onlyParent()
+        $mainDiseases = Disease::publish()
+                        ->onlyParent()
                         ->with('media','children')
                         ->get();
         return view('Admin.nav-section.diseases.mainDiseases.index',compact('mainDiseases'));
+    }
+
+    //subDiseases
+    public function subDiseases(Request $request)
+    {
+        $subDiseases = Disease::publish()
+                        ->onlyChildren()
+                        ->with('media','parent')
+                        ->get();
+        return view('Admin.nav-section.diseases.subDiseases.index',compact('subDiseases'));
     }
 
     //permissions

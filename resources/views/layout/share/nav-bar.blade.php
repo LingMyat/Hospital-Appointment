@@ -30,7 +30,7 @@
         <div class="collapse" id="ui-basic">
           <ul class="nav flex-column sub-menu">
             <li class="nav-item"> <a class="nav-link" href="{{ route('admin.diseases') }}">Main Diseases</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Sub Diseases</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{ route('admin.sub-diseases') }}">Sub Diseases</a></li>
           </ul>
         </div>
       </li>
