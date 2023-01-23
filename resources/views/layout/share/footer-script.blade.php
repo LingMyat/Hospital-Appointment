@@ -27,6 +27,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 {{-- Select 2 --}}
 <script src="{{ asset('assets/theme/lib/NiceSelect/js/jquery.nice-select.js') }}"></script>
+<script src="{{ asset('assets/theme/lib/dropify/dropify.min.js') }}"></script>
 
 
 

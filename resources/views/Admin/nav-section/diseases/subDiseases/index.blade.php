@@ -107,6 +107,10 @@
                     url: get_modal_url,
                     success: function(view) {
                         $('#modal-content').html(view);
+                        $('#sub_disease_image').html(`<input type="file" class="dropify form-control" data-max-file-size="2M" id="image" data-max-width="600"
+                           data-max-height="600" name="sub_disease_image" data-allowed-file-extensions="jpeg jpg png"  required/>`);
+
+                        $('.dropify').dropify();
                     }
                 });
             });

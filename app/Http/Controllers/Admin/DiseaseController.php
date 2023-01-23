@@ -62,4 +62,9 @@ class DiseaseController extends Controller
                         ->get();
         return view('Admin.share.modal.sub-disease',compact('mainDiseases'));
     }
+
+    public function subStore(Request $request)
+    {
+        dd($request->all());
+    }
 }

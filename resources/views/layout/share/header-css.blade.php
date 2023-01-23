@@ -20,8 +20,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
     <link rel="stylesheet" href="{{ asset('assets/theme/lib/NiceSelect/css/nice-select.css') }}">
-    <style>
 
+    <link rel="stylesheet" href="{{ asset('assets/theme/lib/dropify/dropify.min.css') }}">
+
+    <style>
     </style>
     @yield('css')
 

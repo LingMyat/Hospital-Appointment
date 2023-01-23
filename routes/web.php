@@ -62,6 +62,7 @@ Route::prefix('admin')
         Route::prefix('sub-diseases')
         ->group(function(){
             Route::get('/create','subCreate')->name('admin.sub-disease.create');
+            Route::post('/create','subStore')->name('admin.sub-desease.store');
         });
     });
 
