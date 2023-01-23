@@ -21,7 +21,6 @@ class HomeController extends Controller
     public function diseases(Request $request)
     {
         $mainDiseases = Disease::onlyParent()
-                        ->orderBy('id','desc')
                         ->with('media','children')
                         ->get();
         return view('Admin.nav-section.diseases.mainDiseases.index',compact('mainDiseases'));

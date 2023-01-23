@@ -50,6 +50,13 @@ Route::prefix('admin')
     Route::controller(DiseaseController::class)
     ->middleware('adminAuthenticated')
     ->group(function(){
+        Route::prefix('main-diseases')
+        ->group(function(){
+            Route::get('/create','mainCreate')->name('admin.main-disease.create');
+            Route::post('/create','mainStore')->name('admin.main-disease.store');
+            Route::patch('/edit/{id}','mainUpdate')->name('admin.main-disease.update');
+            Route::get('/{id}','mainDestroy')->name('admin.main-disease.destroy');
+        });
 
     });
 

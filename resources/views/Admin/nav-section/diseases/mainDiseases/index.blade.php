@@ -1,8 +1,7 @@
 @extends('layout.app')
 @section('css')
     <style>
-        div.dataTables_wrapper div.dataTables_paginate ul.pagination li.active a
-        {
+        div.dataTables_wrapper div.dataTables_paginate ul.pagination li.active a {
             background: linear-gradient(to right, #da8cff, #9a55ff);
             background-image: linear-gradient(to right, rgb(218, 140, 255), rgb(154, 85, 255));
             background-position-x: initial;
@@ -34,10 +33,21 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <h4 class=" d-inline-block">Main Diseases</h4>
-                        <a class="btn float-end btn-sm btn-inverse-primary btn-icon-text" href="">
+                        <button class="btn float-end btn-sm btn-inverse-primary btn-icon-text " id="add_btn"
+                            data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            data-url="{{ route('admin.main-disease.create') }}">
                             <i class="mdi mdi-plus-circle"></i>
                             Add
-                        </a>
+                        </button>
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content" id="modal-content">
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="">
                         <table class="table table-hover Datatable">
@@ -45,7 +55,6 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Image</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -55,16 +64,20 @@
                                     <tr>
                                         <td>{{ $key += 1 }}</td>
                                         <td>{{ $mainDisease->name }}</td>
-                                        <td>
-                                            <img src="{{ $mainDisease->media->image ?? asset('assets/theme/profile/default-disease.png') }}"
-                                                alt="{{ $mainDisease->name }}">
-                                        </td>
                                         <td class="">
                                             {!! getStatusBadge($mainDisease->status) !!}
                                         </td>
                                         <td class=" ">
-                                            <a class="" href=""><i class="mdi mdi-square-edit-outline h4"></i></a>
-                                            <a class="text-danger" href=""><i
+                                            <a
+                                                style="cursor: pointer"
+                                                class="edit-btn"
+                                                data-main-disease-name="{{ $mainDisease->name }}"
+                                                data-main-disease-status="{{ $mainDisease->status }}"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                                data-url="{{ route('admin.main-disease.update', $mainDisease->id) }}"><i
+                                                    class="mdi mdi-square-edit-outline h4"></i></a>
+                                            <a class="text-danger" href="{{ route('admin.main-disease.destroy',$mainDisease->id) }}"><i
                                                     class="mdi mdi-delete-forever h4"></i></a>
                                         </td>
                                     </tr>
@@ -85,6 +98,47 @@
     <script>
         $(document).ready(function() {
             $('.Datatable').DataTable();
+            var get_modal_url = $('#add_btn').data('url')
+
+            $('#add_btn').click(function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: "get",
+                    url: get_modal_url,
+                    success: function(view) {
+                        $('#modal-content').html(view);
+                    }
+                });
+            });
+
+            $('.edit-btn').click(function(e) {
+                e.preventDefault();
+                let name = $(this).data('main-disease-name');
+                let status = $(this).data('main-disease-status');
+                let url = $(this).data('url');
+
+                $.ajax({
+                    type: "get",
+                    url: get_modal_url,
+                    success: function(view) {
+                        $('#modal-content').html(view);
+
+                        $('#main_disease_name').val(name);
+
+                        if (status) {
+                            $('#main_disease_status').attr('checked', true);
+                        } else {
+                            $('#main_disease_status').removeAttr('checked');
+                        }
+
+                        $('#main_diseasee_form').attr('action', url);
+                        $('#main_diseasee_form_method').val('patch');
+
+                    }
+                });
+            });
+
         });
     </script>
 @endsection
