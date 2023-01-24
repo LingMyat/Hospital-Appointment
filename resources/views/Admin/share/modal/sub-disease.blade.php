@@ -5,12 +5,12 @@
    }
 </style>
 <div class="modal-body">
-    <form method="post" action="{{ route('admin.sub-desease.store') }}" id="main_diseasee_form" enctype="multipart/form-data" class="forms-sample">
+    <form method="post" action="{{ route('admin.sub-disease.store') }}" id="main_diseasee_form" enctype="multipart/form-data" class="forms-sample">
         <input type="hidden" name="_method" id="main_diseasee_form_method">
         @csrf
         <div class="form-group mb-5">
             <label for="main_disease_select" class="form-label">Main Disease</label>
-              <select class="w-100 border-1 border-primary" name="parent_id" id="main_disease_select">
+              <select class="w-100 border-1 border-primary" name="main_disease" id="main_disease_select" required>
                 <option value="">Select Main Disease</option>
                     @foreach ($mainDiseases as $mainDisease)
                         <option value="{{ $mainDisease->id }}">{{ $mainDisease->name }}</option>

@@ -50,11 +50,11 @@ class Disease extends Model
 
     public function parent()
     {
-        return $this->belongsTo(Disease::class, 'parent_id');
+        return $this->belongsTo(Disease::class, 'parent_id')->publish();
     }
 
     public function children()
     {
-        return $this->hasMany(Disease::class, 'parent_id');
+        return $this->hasMany(Disease::class, 'parent_id')->publish();
     }
 }

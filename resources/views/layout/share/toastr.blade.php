@@ -15,7 +15,10 @@
    <script>
       toastr.warning("{{ $message }}",
       {timeOut: 4000},
-      {"closeButton": true}
+        {
+            "positionClass": "toast-top-center",
+            "closeButton": true
+        }
       )
    </script>
 @endif

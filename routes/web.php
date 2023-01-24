@@ -56,14 +56,16 @@ Route::prefix('admin')
             Route::get('/create','mainCreate')->name('admin.main-disease.create');
             Route::post('/create','mainStore')->name('admin.main-disease.store');
             Route::patch('/edit/{id}','mainUpdate')->name('admin.main-disease.update');
-            Route::get('/{id}','mainDestroy')->name('admin.main-disease.destroy');
         });
 
         Route::prefix('sub-diseases')
         ->group(function(){
             Route::get('/create','subCreate')->name('admin.sub-disease.create');
-            Route::post('/create','subStore')->name('admin.sub-desease.store');
+            Route::post('/create','subStore')->name('admin.sub-disease.store');
+            Route::patch('/edit/{id}','subUpdate')->name('admin.sub-disease.update');
         });
+
+        Route::get('diseases/{id}','destroy')->name('admin.disease.destroy');
     });
 
     Route::controller(PermissionController::class)

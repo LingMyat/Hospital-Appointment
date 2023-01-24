@@ -77,7 +77,7 @@
                                                 data-bs-target="#exampleModal"
                                                 data-url="{{ route('admin.main-disease.update', $mainDisease->id) }}"><i
                                                     class="mdi mdi-square-edit-outline h4"></i></a>
-                                            <a class="text-danger" href="{{ route('admin.main-disease.destroy',$mainDisease->id) }}"><i
+                                            <a class="text-danger" href="{{ route('admin.disease.destroy',$mainDisease->id) }}"><i
                                                     class="mdi mdi-delete-forever h4"></i></a>
                                         </td>
                                     </tr>

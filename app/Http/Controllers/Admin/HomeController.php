@@ -32,6 +32,7 @@ class HomeController extends Controller
     {
         $subDiseases = Disease::publish()
                         ->onlyChildren()
+                        ->orderBy('id','asc')
                         ->with('media','parent')
                         ->get();
         return view('Admin.nav-section.diseases.subDiseases.index',compact('subDiseases'));

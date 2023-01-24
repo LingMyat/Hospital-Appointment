@@ -73,9 +73,19 @@
                                         <td class="">
                                             {!! getStatusBadge($subDisease->status) !!}
                                         </td>
-                                        <td class=" ">
-                                            <a class="" href=""><i class="mdi mdi-square-edit-outline h4"></i></a>
-                                            <a class="text-danger" href=""><i
+                                        <td class="">
+                                            <a
+                                                style="cursor: pointer"
+                                                class="update-btn"
+                                                data-sub-disease-name="{{ $subDisease->name }}"
+                                                data-sub-disease-status="{{ $subDisease->status }}"
+                                                data-sub-disease-parent-id="{{ $subDisease->parent_id }}"
+                                                data-sub-disease-image="{{ $subDisease->media->image }}"
+                                                data-url="{{ route('admin.sub-disease.update',$subDisease->id) }}"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                            ><i class="mdi mdi-square-edit-outline h4"></i></a>
+                                            <a class="text-danger" href="{{ route('admin.disease.destroy',$subDisease->id) }}"><i
                                                     class="mdi mdi-delete-forever h4"></i></a>
                                         </td>
                                     </tr>
@@ -107,13 +117,48 @@
                     url: get_modal_url,
                     success: function(view) {
                         $('#modal-content').html(view);
-                        $('#sub_disease_image').html(`<input type="file" class="dropify form-control" data-max-file-size="2M" id="image" data-max-width="600"
-                           data-max-height="600" name="sub_disease_image" data-allowed-file-extensions="jpeg jpg png"  required/>`);
+                        $('#sub_disease_image').html(`<input type="file" class="dropify form-control" data-max-file-size="2M" id="image" data-max-width="700"
+                           data-max-height="700" name="image" data-allowed-file-extensions="jpeg jpg png jfif"  required/>`);
 
                         $('.dropify').dropify();
                     }
                 });
             });
+
+            $('.update-btn').click(function(e){
+                e.preventDefault();
+                let parent_id = $(this).data('sub-disease-parent-id');
+                let name = $(this).data('sub-disease-name');
+                let img = $(this).data('sub-disease-image');
+                let status = $(this).data('sub-disease-status');
+                let url = $(this).data('url');
+
+                console.log(name);
+                $.ajax({
+                    type: "get",
+                    url: get_modal_url,
+                    success: function (view) {
+                        $('#modal-content').html(view);
+                        $('#sub_disease_name').val(name);
+                        $(`#main_disease_select option[value=${parent_id}]`).attr('selected', 'selected');
+
+
+                        $('#sub_disease_image').html(`<input type="file" class="dropify form-control" data-max-file-size="2M" id="image" data-max-width="700"
+                           data-max-height="700" name="image" data-allowed-file-extensions="jpeg jpg png jfif"  data-default-file="${img}"/>`);
+                           $('.dropify').dropify();
+
+                        if (status) {
+                            $('#sub_disease_status').attr('checked', true);
+                        } else {
+                            $('#sub_disease_status').removeAttr('checked');
+                        }
+
+                        $('#main_diseasee_form').attr('action', url);
+                        $('#main_diseasee_form_method').val('patch');
+                    }
+                });
+            })
+
 
         });
     </script>
