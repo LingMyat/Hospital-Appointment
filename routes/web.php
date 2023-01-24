@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Patient\HomeController as PatientHomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -101,6 +102,11 @@ Route::prefix('admin')
         Route::get('/{id}','destroy')->name('admin.user.destroy');
     });
 
+});
+
+Route::controller(PatientHomeController::class)
+->group(function(){
+    Route::get('/home','home')->name('HOME');
 });
 
 

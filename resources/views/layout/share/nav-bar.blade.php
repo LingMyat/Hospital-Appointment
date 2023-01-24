@@ -34,7 +34,7 @@
           </ul>
         </div>
       </li>
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link" href="pages/icons/mdi.html">
           <span class="menu-title">Icons</span>
           <i class="mdi mdi-contacts menu-icon"></i>
@@ -57,7 +57,7 @@
           <span class="menu-title">Tables</span>
           <i class="mdi mdi-table-large menu-icon"></i>
         </a>
-      </li>
+      </li> --}}
       <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#user_management" aria-expanded="false" aria-controls="ui-basic">
           <span class="menu-title">User Management</span>

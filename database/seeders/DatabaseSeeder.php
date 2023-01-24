@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(TestPermissionSeeder::class);
         // $this->call(CreateAdminUserSeeder::class);
         // $this->call(DiseasesSeeder::class);
+        $this->call(NrcPrefixSeeder::class);
     }
 }
