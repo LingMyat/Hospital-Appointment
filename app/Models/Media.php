@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Media extends Model
 {
@@ -19,8 +20,10 @@ class Media extends Model
         'updated_at',
     ];
 
-    public function getImageAttribute($value)
+    protected function image():Attribute
     {
-        return asset($value);
+        return Attribute::make(
+            get: fn ($value) => asset($value),
+        );
     }
 }

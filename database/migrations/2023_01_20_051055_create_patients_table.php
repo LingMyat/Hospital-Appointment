@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('NRC')->nullable();
             $table->string('gender')->nullable();
             $table->string('address')->nullable();
-            $table->string('phone');
-            $table->string('email');
+            $table->string('phone')->nullable();;
+            $table->string('email')->nullable();;
             $table->string('password');
             $table->string('role')->default('patient');
             $table->boolean('status')->default(1)->comment('1 is Active, 0 is Unactive');

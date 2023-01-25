@@ -7,6 +7,7 @@
 <script src="{{ asset('assets/patient/lib/tempusdominus/js/moment.min.js') }}"></script>
 <script src="{{ asset('assets/patient/lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
 <script src="{{ asset('assets/patient/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+@include('Patient.Layout.Addition.addition-script')
 
 <!-- Template Javascript -->
 <script src="{{ asset('assets/patient/js/main.js') }}"></script>
