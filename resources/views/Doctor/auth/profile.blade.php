@@ -67,7 +67,7 @@
                         <div class="form-group row">
                             <label for="email" class="col-sm-3 col-form-label">Email</label>
                             <div class="col-sm-9">
-                                <input type="email" class="form-control" id="email" value="{{ $doctor->email }}"
+                                <input type="email" name="email" class="form-control" id="email" value="{{ $doctor->email }}"
                                     placeholder="Email">
                             </div>
                         </div>

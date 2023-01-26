@@ -34,7 +34,14 @@ function doctorAuth()
 function doctorInfo()
 {
     $doctor = doctorAuth();
-    if ($doctor->degree == Null) {
+    $arr = [
+        $doctor->degree,
+        $doctor->SAMA,
+        $doctor->biography,
+        $doctor->email,
+        $doctor->phone,
+    ];
+    if (in_array(NUll,$arr)) {
         return false;
     }
     return true;

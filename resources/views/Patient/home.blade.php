@@ -25,7 +25,7 @@
                     <div class="row gx-5 my-2">
                         <h5 class="my-3">{{ $mainDisease->name }}</h5>
                         @foreach($mainDisease->children as $subDisease)
-                            <div class="col-xl-4 col-lg-6">
+                            <div class="col-xl-3 col-lg-4 col-md-6">
                                 <div class="bg-light rounded overflow-hidden">
                                     <img class="img-fluid w-100" src="{{ $subDisease->media->image }}" alt="">
                                     <div class="p-4">

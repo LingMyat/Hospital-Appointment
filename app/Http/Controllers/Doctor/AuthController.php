@@ -6,6 +6,7 @@ use App\Models\Doctor;
 use App\Helper\DoctorAuth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\DoctorProfession;
 use App\Traits\MakeSlug;
 use Illuminate\Support\Facades\Hash;
 
@@ -91,5 +92,25 @@ class AuthController extends Controller
     public function update(Request $request)
     {
         dd($request->all());
+        Doctor::findOrFail(doctorAuth()->id)->update([
+            'name'=>$request->name,
+            'slug'=>$this->makeSlug($request->name,'doctors'),
+            'email'=>$request->email,
+            'phone'=>$request->phone,
+            'degree'=>$request->degree,
+            'SAMA'=>$request->SAMA,
+            'biography'=>$request->biography
+        ]);
+
+        if ($request->professions) {
+            foreach ($request->professions as $key => $disease_id) {
+                DoctorProfession::create([
+                    'doctor_id'=>doctorAuth()->id,
+                    'disease_id'=>$disease_id
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success','Successfully updated!');
     }
 }

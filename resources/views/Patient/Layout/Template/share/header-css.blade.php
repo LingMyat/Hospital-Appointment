@@ -12,4 +12,10 @@
 <!-- Template Stylesheet -->
 <link href="{{ asset('assets/patient/css/style.css') }}" rel="stylesheet">
 @include('Patient.Layout.Addition.addition-css')
+<style>
+    .hero-header
+    {
+        height: 83vh;
+    }
+</style>
 @yield('css')
