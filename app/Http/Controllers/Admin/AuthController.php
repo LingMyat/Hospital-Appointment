@@ -35,5 +35,11 @@ class AuthController extends Controller
         return to_route('admin.dashboard')->with('success','Successfully Logged In');
     }
 
+    //logout
+    public function logout(Request $request)
+    {
+        Auth::logout(auth()->user());
+        return to_route('welcome');
+    }
 
 }

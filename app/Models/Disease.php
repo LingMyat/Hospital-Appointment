@@ -10,6 +10,7 @@ class Disease extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'slug',
         'status',
         'parent_id',
         'deleted_at'

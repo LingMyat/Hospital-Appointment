@@ -16,11 +16,13 @@ return new class extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('degree');
-            $table->string('SAMA');
-            $table->string('email');
-            $table->string('phone');
+            $table->string('slug');
+            $table->string('degree')->nullable();
+            $table->string('SAMA')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->string('password');
+            $table->longText('biography')->nullable();
             $table->string('image')->default('assets/theme/profile/default-doctor.jpg');
             $table->string('role')->default('doctor');
             $table->boolean('status')->default(1)->comment('1 is Active, 0 is Unactive');

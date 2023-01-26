@@ -3,11 +3,13 @@
 namespace Database\Seeders;
 
 use App\Models\Disease;
+use App\Traits\MakeSlug;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DiseasesSeeder extends Seeder
 {
+    use MakeSlug;
     /**
      * Run the database seeds.
      *
@@ -27,7 +29,8 @@ class DiseasesSeeder extends Seeder
 
         foreach ($diseases as $key => $disease) {
             Disease::create([
-                'name'=>$disease
+                'name'=>$disease,
+                'slug'=>$this->makeSlug($disease,'diseases')
             ]);
         }
 

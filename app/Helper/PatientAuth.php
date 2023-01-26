@@ -8,7 +8,7 @@ class PatientAuth
 {
     public static function login(Patient $patient)
     {
-        session()->put('LoggedIn', true);
+        session()->put('patientLoggedIn', true);
         session()->put('patientId', $patient->id);
         session()->put('patientName', $patient->name);
         // $patient->status==false?$patient->update(['status'=>true]):$patient;
@@ -17,7 +17,7 @@ class PatientAuth
     public static function logout()
     {
         session()->forget([
-            'LoggedIn',
+            'patientLoggedIn',
             'patientId',
             'patientName'
         ]);

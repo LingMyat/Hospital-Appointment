@@ -13272,11 +13272,6 @@ code {
   .dropdown .dropdown-menu .dropdown-item {
     font-size: 1rem;
     padding: .25rem 1.5rem; }
-    .dropdown .dropdown-menu .dropdown-item:active {
-      background: initial; }
-    .dropdown .dropdown-menu .dropdown-item:hover {
-      background-color: #f8f9fa;
-      color: #ffffff; }
 
 /* Forms */
 .form-group {

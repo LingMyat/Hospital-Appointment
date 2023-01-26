@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Doctor\AuthController as DoctorAuthController;
+use App\Http\Controllers\Doctor\HomeController as DoctorHomeController;
 use App\Http\Controllers\Patient\AuthController as PatientAuthController;
 use App\Http\Controllers\Patient\HomeController as PatientHomeController;
 use Illuminate\Support\Facades\Auth;
@@ -25,18 +27,13 @@ Route::get('/',function(){
     return view('welcome');
 })->name('welcome');
 
-Route::get('/logout',function(){
-    Auth::logout(auth()->user());
-    return to_route('welcome');
-})->name('logout');
-
-
 Route::prefix('admin')
 ->group(function(){
     Route::controller(AuthController::class)
     ->group(function(){
         Route::get('/login','loginPage')->name('admin.loginPage');
         Route::post('/login','login')->name('admin.login');
+        Route::get('/logout','logout')->name('admin.logout');
     });
 
     Route::controller(HomeController::class)
@@ -104,7 +101,7 @@ Route::prefix('admin')
     });
 
 });
-
+//Patient
 Route::controller(PatientHomeController::class)
 ->group(function(){
     Route::get('/home','home')->name('HOME');
@@ -117,6 +114,27 @@ Route::controller(PatientAuthController::class)
     Route::get('/register','registerPage')->name('patient.registerPage');
     Route::post('/register','register');
     Route::get('/logout','logout')->name('patient.logout');
+});
+
+//Doctor
+Route::prefix('doctor')
+->group(function(){
+    Route::controller(DoctorAuthController::class)
+    ->group(function(){
+        Route::redirect('/','doctor/login');
+        Route::get('/login','loginPage')->name('doctor.loginPage');
+        Route::post('/login','login');
+        Route::get('/register','registerPage')->name('doctor.registerPage');
+        Route::post('/register','register');
+        Route::get('/logout','logout')->name('doctor.logout');
+        Route::patch('/profile','update');
+    });
+
+    Route::controller(DoctorHomeController::class)
+    ->group(function(){
+        Route::get('/dashboard','dashboard')->name('doctor.dashboard');
+        Route::get('/profile','profile')->name('doctor.profile');
+    });
 });
 
 

@@ -7,9 +7,11 @@ use App\Models\Disease;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Traits\MakeSlug;
 
 class DiseaseController extends Controller
 {
+    use MakeSlug;
     // Main Diseases Start
         public function mainCreate(Request $request)
         {
@@ -24,6 +26,7 @@ class DiseaseController extends Controller
             $status = $request->status ? true : false;
             Disease::create([
                 'name'=>$request->name,
+                'slug'=>$this->makeSlug($request->name,'diseases'),
                 'status'=>$status
             ]);
 
@@ -39,6 +42,7 @@ class DiseaseController extends Controller
             $mainDisease = Disease::findOrFail($id);
             $mainDisease->update([
                 'name' => $request->name,
+                'slug'=>$this->makeSlug($request->name,'diseases'),
                 'status' => $status
             ]);
             return redirect()->back()->with('success', 'Successfully updated!');
@@ -68,6 +72,7 @@ class DiseaseController extends Controller
             try {
                 $sub_disease = Disease::create([
                     'name'=>$request->name,
+                    'slug'=>$this->makeSlug($request->name,'diseases'),
                     'parent_id'=>$request->main_disease,
                     'status'=>$status
                 ]);
@@ -98,6 +103,7 @@ class DiseaseController extends Controller
             try {
                 Disease::findOrFail($id)->update([
                     'name'=>$request->name,
+                    'slug'=>$this->makeSlug($request->name,'diseases'),
                     'parent_id'=>$request->main_disease,
                     'status'=>$status
                 ]);

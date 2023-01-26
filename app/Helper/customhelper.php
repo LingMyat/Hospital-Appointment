@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Doctor;
 use App\Models\Patient;
 
 function getStatusBadge($value){
@@ -16,4 +17,25 @@ function patientAuth()
     }
 
     return null;
+}
+
+function doctorAuth()
+{
+    if (session('doctorId')) {
+        $doctor = Doctor::active()->where('id', session('doctorId'))->get()->first();
+        if ($doctor) {
+            return $doctor;
+        }
+    }
+
+    return null;
+}
+
+function doctorInfo()
+{
+    $doctor = doctorAuth();
+    if ($doctor->degree == Null) {
+        return false;
+    }
+    return true;
 }

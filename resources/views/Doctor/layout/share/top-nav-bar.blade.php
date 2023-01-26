@@ -22,18 +22,18 @@
         <li class="nav-item nav-profile dropdown">
           <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="nav-profile-img">
-              <img src="{{ auth()->user()->image }}" alt="image">
+              <img src="{{ doctorAuth()->image }}" alt="image">
               <span class="availability-status online"></span>
             </div>
             <div class="nav-profile-text">
-              <p class="mb-1 text-black">{{ auth()->user()->name }}</p>
+              <p class="mb-1 text-black">{{ doctorAuth()->name }}</p>
             </div>
           </a>
           <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-            <a class="dropdown-item" href="#">
-              <i class="mdi mdi-cached me-2 text-success"></i> Activity Log </a>
+            <a class="dropdown-item" href="{{ route('doctor.profile') }}">
+              <i class="mdi mdi-account me-2 text-success"></i> Profile </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ route('admin.logout') }}">
+            <a class="dropdown-item" href="{{ route('doctor.logout') }}">
               <i class="mdi mdi-logout me-2 text-primary"></i> Signout </a>
           </div>
         </li>

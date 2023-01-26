@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug');
             $table->string('image')->default('assets/theme/profile/default-patient.png');
             $table->string('NRC')->nullable();
             $table->string('gender')->nullable();

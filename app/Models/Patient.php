@@ -14,6 +14,7 @@ class Patient extends Model
         'name',
         'image',
         'NRC',
+        'slug',
         'gender',
         'address',
         'phone',
