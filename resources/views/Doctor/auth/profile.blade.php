@@ -5,15 +5,26 @@
         .form-group{
             margin-bottom: 11px !important;
         }
-        .select2-container--default .select2-selection--multiple
+        .select2-container--default .select2-selection--multiple,
+        .select2-container--default.select2-container--focus .select2-selection--multiple
         {
             border: 1px solid #e0e2e4;
             padding: 0.9rem 1.2rem;
         }
-        .select2-container--default.select2-container--focus .select2-selection--multiple
+        .select2-container--default .select2-selection--multiple .select2-selection__choice
         {
-            border: 1px solid #e0e2e4;
+            background-color: #9a55ff;
+            color: #fff;
         }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice button,
+        .select2-container--default .select2-selection--multiple .select2-selection__choice button:hover,
+        .select2-container--default .select2-selection--multiple .select2-selection__choice button:focus
+        {
+            color: #fff;
+            background-color: #9a55ff;
+            border: none;
+        }
+
     </style>
 @endsection
 @section('content')
@@ -35,7 +46,7 @@
         <div class="col-sm-10 mx-auto grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <form class="forms-sample" method="POST">
+                    <form class="forms-sample" method="POST" enctype="multipart/form-data">
                         @method('patch')
                         @csrf
                         <div class="form-group row">
@@ -92,7 +103,7 @@
                                     @foreach ($mainDiseases as $mainDisease)
                                         <optgroup label="{{ $mainDisease->name }}">
                                             @foreach ($mainDisease->children as $subDisease)
-                                                <option value="{{ $subDisease->id }}">{{ $subDisease->name }}</option>
+                                                <option value="{{ $subDisease->id }}" {{ in_array($subDisease->id,$doctor->Specialities->pluck('id')->toArray())?'selected':'' }}>{{ $subDisease->name }}</option>
                                             @endforeach
                                         </optgroup>
                                     @endforeach

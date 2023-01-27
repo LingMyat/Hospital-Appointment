@@ -58,4 +58,13 @@ class Disease extends Model
     {
         return $this->hasMany(Disease::class, 'parent_id')->publish();
     }
+
+    public function doctors()
+    {
+        return $this->belongsToMany(
+            Doctor::class,
+            'doctor_professions',
+            'disease_id','doctor_id'
+        );
+    }
 }

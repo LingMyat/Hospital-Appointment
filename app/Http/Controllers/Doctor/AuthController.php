@@ -91,8 +91,7 @@ class AuthController extends Controller
     //profile update
     public function update(Request $request)
     {
-        dd($request->all());
-        Doctor::findOrFail(doctorAuth()->id)->update([
+        $data = [
             'name'=>$request->name,
             'slug'=>$this->makeSlug($request->name,'doctors'),
             'email'=>$request->email,
@@ -100,9 +99,19 @@ class AuthController extends Controller
             'degree'=>$request->degree,
             'SAMA'=>$request->SAMA,
             'biography'=>$request->biography
-        ]);
+        ];
+
+        if($request->hasFile('image')){
+            $path = Doctor::UPLOAD_PATH.date('Y').'/'.date('m')."/";
+            $fileName = uniqid().time().'.'.$request->file('image')->extension();
+            $request->file('image')->move(public_path($path),$fileName);
+            $data['image'] = ($path . $fileName);
+        }
+
+        Doctor::findOrFail(doctorAuth()->id)->update($data);
 
         if ($request->professions) {
+            DoctorProfession::where('doctor_id',doctorAuth()->id)->delete();
             foreach ($request->professions as $key => $disease_id) {
                 DoctorProfession::create([
                     'doctor_id'=>doctorAuth()->id,

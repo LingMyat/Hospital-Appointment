@@ -20,12 +20,15 @@ class Doctor extends Model
         'password',
         'image',
         'status',
+        'biography',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
     ];
+
+    const UPLOAD_PATH = "upload/doctors";
 
     protected function image():Attribute
     {
@@ -44,5 +47,15 @@ class Doctor extends Model
     public function scopeActive($query)
     {
         return $query->where("status",true);
+    }
+
+    public function Specialities()
+    {
+       return $this->belongsToMany(
+            Disease::class,
+            'doctor_professions',
+            'doctor_id','disease_id',
+            'id','id'
+        );
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Doctor\AuthController as DoctorAuthController;
 use App\Http\Controllers\Doctor\HomeController as DoctorHomeController;
 use App\Http\Controllers\Patient\AuthController as PatientAuthController;
+use App\Http\Controllers\Patient\DoctorController as PatientDoctorController;
 use App\Http\Controllers\Patient\HomeController as PatientHomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -105,6 +106,13 @@ Route::prefix('admin')
 Route::controller(PatientHomeController::class)
 ->group(function(){
     Route::get('/home','home')->name('HOME');
+    Route::get('/doctors','doctors')->name('patient.doctors');
+});
+
+Route::controller(PatientDoctorController::class)
+->prefix('doctors')
+->group(function(){
+    Route::get('/{slug}','show')->name('patient.doctor.show');
 });
 
 Route::controller(PatientAuthController::class)

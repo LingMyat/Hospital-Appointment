@@ -31,7 +31,7 @@
                                     <div class="p-4">
                                         <a class="h5 d-block mb-3" href="">{{ $subDisease->name }}</a>
 
-                                        <a href="" class="btn btn-primary">Find Doctor</a>
+                                        <a href="{{ route('patient.doctors') }}?speciality={{ $subDisease->slug }}" class="btn btn-primary">Find Doctor</a>
                                     </div>
                                 </div>
                             </div>

@@ -2,9 +2,9 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
       <li class="nav-item nav-profile">
-        <a href="#" class="nav-link">
-          <div class="nav-profile-image">
-            <img src="{{ doctorAuth()->image }}" alt="profile">
+        <a href="{{ route('doctor.profile') }}" class="nav-link">
+          <div class="nav-profile-image me-2">
+            <img style="width: 55px;height: 45px; border-radius:10px;" class="" src="{{ doctorAuth()->image }}" alt="profile">
             <span class="login-status online"></span>
             <!--change to offline or busy as needed-->
           </div>
@@ -16,7 +16,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('doctor.dashboard') }}">
           <span class="menu-title">Dashboard</span>
           <i class="mdi mdi-home menu-icon"></i>
         </a>
