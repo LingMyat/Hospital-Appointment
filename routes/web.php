@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\DiseaseController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Doctor\AuthController as DoctorAuthController;
+use App\Http\Controllers\Doctor\ChatController as DoctorChatController;
 use App\Http\Controllers\Doctor\HomeController as DoctorHomeController;
 use App\Http\Controllers\Patient\AuthController as PatientAuthController;
 use App\Http\Controllers\Patient\DoctorController as PatientDoctorController;
@@ -46,6 +48,7 @@ Route::prefix('admin')
         Route::get('/permissions','permissions')->name('admin.permissions');
         Route::get('/roles','roles')->name('admin.roles');
         Route::get('/users','users')->name('admin.users');
+        Route::get('/rooms','rooms')->name('admin.room');
     });
 
     Route::controller(DiseaseController::class)
@@ -101,6 +104,13 @@ Route::prefix('admin')
         Route::get('/{id}','destroy')->name('admin.user.destroy');
     });
 
+    Route::controller(ChatController::class)
+    ->middleware('adminAuthenticated')
+    ->prefix('rooms')
+    ->group(function(){
+        Route::get('/create','create')->name('admin.room.create');
+    });
+
 });
 //Patient
 Route::controller(PatientHomeController::class)
@@ -142,6 +152,12 @@ Route::prefix('doctor')
     ->group(function(){
         Route::get('/dashboard','dashboard')->name('doctor.dashboard');
         Route::get('/profile','profile')->name('doctor.profile');
+    });
+
+    Route::controller(DoctorChatController::class)
+    ->prefix('chat')
+    ->group(function(){
+        Route::get('/','index')->name('doctor.chat');
     });
 });
 

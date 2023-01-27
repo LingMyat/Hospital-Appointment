@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug');
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->foreign('admin_id')->references('id')->on('users')->onDelete('set null');
+            $table->string('image')->nullable();
             $table->boolean('active')->default(1)->comment('1 is Active, 0 is Unactive');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

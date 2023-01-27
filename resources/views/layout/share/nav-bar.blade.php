@@ -34,13 +34,13 @@
           </ul>
         </div>
       </li>
-      {{-- <li class="nav-item">
-        <a class="nav-link" href="pages/icons/mdi.html">
-          <span class="menu-title">Icons</span>
-          <i class="mdi mdi-contacts menu-icon"></i>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.room') }}">
+          <span class="menu-title">Chat Rooms</span>
+          <i class="mdi mdi-cellphone-link menu-icon"></i>
         </a>
       </li>
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link" href="pages/forms/basic_elements.html">
           <span class="menu-title">Forms</span>
           <i class="mdi mdi-format-list-bulleted menu-icon"></i>

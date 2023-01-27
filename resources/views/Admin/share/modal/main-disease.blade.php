@@ -1,4 +1,3 @@
-
 <div class="modal-body">
     <form method="post" action="{{ route('admin.main-disease.store') }}" id="main_diseasee_form" class="forms-sample">
         <input type="hidden" name="_method" id="main_diseasee_form_method">

@@ -7,6 +7,7 @@ use App\Models\Disease;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use App\Models\Room;
 use Spatie\Permission\Models\Permission;
 
 class HomeController extends Controller
@@ -67,5 +68,12 @@ class HomeController extends Controller
             })->get();
         }
         return view('Admin.nav-section.userManagement.users.index', compact('users'));
+    }
+
+    //rooms
+    public function rooms(Request $request)
+    {
+        $rooms = Room::active()->get();
+        return view('Admin.nav-section.rooms.index',$rooms);
     }
 }
