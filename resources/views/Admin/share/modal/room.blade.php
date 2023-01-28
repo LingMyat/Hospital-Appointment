@@ -1,6 +1,6 @@
 <div class="modal-body">
-    <form method="post" action="" id="main_diseasee_form" class="forms-sample">
-        <input type="hidden" name="_method" id="main_diseasee_form_method">
+    <form method="post" action="{{ route('admin.room.store') }}" id="main_diseasee_form" class="forms-sample" enctype="multipart/form-data">
+        <input type="hidden" name="_method" id="room_form_method">
         @csrf
         <div class="form-group row">
             <label for="room_name" class="col-sm-4 col-form-label">Room Name</label>

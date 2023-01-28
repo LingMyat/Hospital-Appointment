@@ -74,6 +74,6 @@ class HomeController extends Controller
     public function rooms(Request $request)
     {
         $rooms = Room::active()->get();
-        return view('Admin.nav-section.rooms.index',$rooms);
+        return view('Admin.nav-section.rooms.index',compact('rooms'));
     }
 }

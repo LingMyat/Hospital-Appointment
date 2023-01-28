@@ -29,7 +29,7 @@
         </a>
         <div class="collapse" id="ui-basic">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="">Chat Rooms</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{ route('doctor.chat') }}">Chat Rooms</a></li>
             <li class="nav-item"> <a class="nav-link" href="">Appointment Chat</a></li>
           </ul>
         </div>

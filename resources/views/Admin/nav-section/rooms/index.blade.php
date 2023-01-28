@@ -14,7 +14,7 @@
         </nav>
     </div>
     <div class="row">
-        <div class="col-lg-12 grid-margin stretch-card">
+        <div class="col-lg-11 mx-auto grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
@@ -35,8 +35,28 @@
                             </div>
                         </div>
                     </div>
-                    <div class="">
-
+                    <div class="row">
+                        @foreach ($rooms as $room)
+                            <div class="my-3 col-md-6">
+                                <!-- Card with an image on left -->
+                                <div class="card mx-1 mb-3">
+                                    <div class="row m-1 g-0">
+                                        <div class="col-md-6">
+                                            <img src="{{ asset($room->image) }}" class="img-fluid rounded-start"
+                                                alt="{{ $room->name }}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card-body p-2">
+                                                <h6 class="card-title">{{ $room->name }}</h6>
+                                                {{-- <div>{{ $room->admin->name }}</div> --}}
+                                                <a href=""
+                                                    class="btn btn-md-sm float-end btn-inverse-danger">Enter</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- End Card with an image on left -->
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -58,8 +78,9 @@
                     url: get_modal_url,
                     success: function(view) {
                         $('#modal-content').html(view);
-                        $('#room_image').html(`<input type="file" class="dropify form-control" data-max-file-size="2M" id="image" data-max-width="700"
-                           data-max-height="700" name="image" data-allowed-file-extensions="jpeg jpg png"  required/>`);
+                        $('#room_image').html(
+                            `<input type="file" class="dropify form-control" data-max-file-size="2M" id="image" name="image" data-allowed-file-extensions="jpeg jpg png"  required/>`
+                            );
 
                         $('.dropify').dropify();
                     }

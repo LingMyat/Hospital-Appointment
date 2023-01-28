@@ -109,6 +109,7 @@ Route::prefix('admin')
     ->prefix('rooms')
     ->group(function(){
         Route::get('/create','create')->name('admin.room.create');
+        Route::post('/','store')->name('admin.room.store');
     });
 
 });
@@ -155,9 +156,10 @@ Route::prefix('doctor')
     });
 
     Route::controller(DoctorChatController::class)
-    ->prefix('chat')
+    ->prefix('rooms')
     ->group(function(){
         Route::get('/','index')->name('doctor.chat');
+        Route::get('/chat','show');
     });
 });
 
