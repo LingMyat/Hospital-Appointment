@@ -42,6 +42,9 @@ class AuthController extends Controller
         }
 
         PatientAuth::login($patient);
+        if ($request->redirect) {
+            return redirect($request->redirect)->with('success', 'Successfully login to your account!');
+        }
         return to_route('HOME')->with('success','Successfully Logged In Account!');
     }
 

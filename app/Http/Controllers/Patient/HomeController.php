@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Patient;
 
-use App\Http\Controllers\Controller;
-use App\Models\Disease;
+use App\Models\Room;
 use App\Models\Doctor;
+use App\Models\Disease;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -30,5 +31,12 @@ class HomeController extends Controller
             $doctors = $disease->doctors;
         }
         return view('Patient.page.doctors.index',compact('doctors'));
+    }
+
+    //chats
+    public function chats(Request $request)
+    {
+        $rooms = Room::active()->get();
+        return view('Patient.page.Chat.index',compact('rooms'));
     }
 }

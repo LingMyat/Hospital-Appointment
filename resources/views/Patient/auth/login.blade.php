@@ -6,7 +6,7 @@
             <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur
                 adipisicing.</p>
         </div>
-        <form action="#" method="post">
+        <form action="" method="post">
             @csrf
             <div class="form-group first">
                 <label for="username">Email or Phone</label>

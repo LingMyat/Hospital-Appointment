@@ -16,7 +16,7 @@ function patientAuth()
         }
     }
 
-    return null;
+    return false;
 }
 
 function doctorAuth()
@@ -28,7 +28,7 @@ function doctorAuth()
         }
     }
 
-    return null;
+    return false;
 }
 
 function doctorInfo()
