@@ -28,9 +28,9 @@ class AuthController extends Controller
         ]);
 
         if (filter_var($request->email_or_phone, FILTER_VALIDATE_EMAIL)) {
-            $doctor = Doctor::where('email',$request->email_or_phone)->get()->first();
+            $doctor = Doctor::where('email',$request->email_or_phone)->first();
         } else {
-            $doctor = Doctor::where('phone',$request->email_or_phone)->get()->first();
+            $doctor = Doctor::where('phone',$request->email_or_phone)->first();
         }
 
         if (empty($doctor)) {
@@ -42,6 +42,9 @@ class AuthController extends Controller
         }
 
         DoctorAuth::login($doctor);
+        if ($request->redirect) {
+            return redirect($request->redirect)->with('success', 'Successfully Logged In Account!');
+        }
         return to_route('doctor.dashboard')->with('success','Successfully Logged In Account!');
     }
 

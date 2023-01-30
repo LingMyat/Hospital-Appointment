@@ -28,9 +28,9 @@ class AuthController extends Controller
         ]);
 
         if (filter_var($request->email_or_phone, FILTER_VALIDATE_EMAIL)) {
-            $patient = Patient::where('email',$request->email_or_phone)->get()->first();
+            $patient = Patient::where('email',$request->email_or_phone)->first();
         } else {
-            $patient = Patient::where('phone',$request->email_or_phone)->get()->first();
+            $patient = Patient::where('phone',$request->email_or_phone)->first();
         }
 
         if (empty($patient)) {

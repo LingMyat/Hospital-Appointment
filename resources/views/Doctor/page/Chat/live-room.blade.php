@@ -32,19 +32,21 @@
                                 id="mainContainer">
                                 <div id="message_Container">
                                     @foreach ($messages as $message)
-                                        @if ($message->user->id == doctorAuth()->id)
+                                        @if ($message->sender_role == doctorAuth()->role)
+                                            @php
+                                                $sender = $message->doctor;
+                                            @endphp
+                                            @if ($sender->id == doctorAuth()->id)
                                             <div class=" text-end m-1 mb-2">
                                                 <small class=''>
                                                     <div class="text-end">
                                                         @if ($message->media)
-                                                            <div style="max-width: 320px"
-                                                                class='d-inline-block p-1 px-2 rounded-1 bg-info-light mx-3 rounded-1 text-start'>
+                                                            <div style="max-width: 320px;background: #198ae3;color: #fff;" class ='d-inline-block p-1 px-2 rounded-1 mx-3 rounded-1 text-start'>
                                                                 <img class="w-100" src="{{ $message->media->image }}"
                                                                     alt="">
                                                             </div>
                                                         @else
-                                                            <b style="max-width: 320px"
-                                                                class='d-inline-block p-1 px-2 rounded-1 bg-info-light mx-3 rounded-1 text-start'>
+                                                            <b style="max-width: 320px;background: #198ae3;color: #fff;" class ='d-inline-block p-1 px-2 rounded-1 mx-3 rounded-1 text-start'>
                                                                 <i class="">
                                                                     <small>{{ $message->message }}</small>
                                                                 </i>
@@ -53,8 +55,7 @@
                                                     </div>
                                                     @foreach ($message->childs as $sameUserMsg)
                                                         <div class="text-end mt-1">
-                                                            <b style="max-width: 320px"
-                                                                class='d-inline-block  p-1 px-2 rounded-1 bg-info-light mx-3 rounded-1 text-start'>
+                                                            <b style="max-width: 320px;background: #198ae3;color: #fff;" class ='d-inline-block p-1 px-2 rounded-1 mx-3 rounded-1 text-start'>
                                                                 <i class="">
                                                                     <small>{{ $sameUserMsg->message }}</small>
                                                                 </i>
@@ -65,18 +66,17 @@
                                             </div>
                                         @else
                                             <div class="mb-2 px-2 d-flex gap-2">
-                                                <img style="height: 25px;width: 25px;" src="{{ $message->user->image }}"
+                                                <img style="height: 25px;width: 25px;" src="{{ $sender->image }}"
                                                     alt="Profile" class="rounded-circle">
                                                 <small class="row msg-content">
-                                                    <b class="col-12">{{ $message->user->name }}</b>
+                                                    <b class="col-12">Dr. {{ $sender->name }}</b>
                                                     @if ($message->media)
-                                                        <div style="max-width: 320px"
-                                                            class="bg-secondary-light py-1 ms-2 my-1 rounded-1">
+                                                        <div style="background: rgba(62, 75, 91, 0.2);color: #3e4b5b;" class="col-lg-5 col-11 col-md-7 col-sm-9 bg-secondary-light ms-3 mt-1 py-2 rounded-1">
                                                             <img class="w-100" src="{{ $message->media->image }}"
                                                                 alt="">
                                                         </div>
                                                     @else
-                                                        <b class="col-8 bg-secondary-light ms-2 mt-1 rounded-1">
+                                                        <b style="background: rgba(62, 75, 91, 0.2);color: #3e4b5b;" class="col-lg-5 col-11 col-md-7 col-sm-9 bg-secondary-light ms-3 mt-1 py-2 rounded-1">
                                                             <i>
                                                                 <small>{{ $message->message }}</small>
                                                             </i>
@@ -84,7 +84,41 @@
                                                     @endif
 
                                                     @foreach ($message->childs as $sameUserMsg)
-                                                        <b class="col-8 bg-secondary-light ms-2 mt-1 rounded-1">
+                                                        <div class='col-6 d-none d-lg-block'></div>
+                                                        <b style="background: rgba(62, 75, 91, 0.2);color: #3e4b5b;" class="col-lg-5 col-11 col-md-7 col-sm-9 bg-secondary-light ms-3 mt-1 py-2 rounded-1">
+                                                            <i>
+                                                                <small>{{ $sameUserMsg->message }}</small>
+                                                            </i>
+                                                        </b>
+                                                    @endforeach
+                                                </small>
+                                            </div>
+                                        @endif
+                                        @else
+                                            @php
+                                                $sender = $message->patient;
+                                            @endphp
+                                            <div class="mb-2 px-2 d-flex gap-2">
+                                                <img style="height: 25px;width: 25px;" src="{{ $sender->image }}"
+                                                    alt="Profile" class="rounded-circle">
+                                                <small class="row msg-content">
+                                                    <b class="col-12">{{ $sender->name }}</b>
+                                                    @if ($message->media)
+                                                        <div style="background: rgba(62, 75, 91, 0.2);color: #3e4b5b;" class="col-lg-5 col-11 col-md-7 col-sm-9 bg-secondary-light ms-3 mt-1 py-2 rounded-1">
+                                                            <img class="w-100" src="{{ $message->media->image }}"
+                                                                alt="">
+                                                        </div>
+                                                    @else
+                                                        <b style="background: rgba(62, 75, 91, 0.2);color: #3e4b5b;" class="col-lg-5 col-11 col-md-7 col-sm-9 bg-secondary-light ms-3 mt-1 py-2 rounded-1">
+                                                            <i>
+                                                                <small>{{ $message->message }}</small>
+                                                            </i>
+                                                        </b>
+                                                    @endif
+
+                                                    @foreach ($message->childs as $sameUserMsg)
+                                                        <div class='col-6 d-none d-lg-block'></div>
+                                                        <b style="background: rgba(62, 75, 91, 0.2);color: #3e4b5b;" class="col-lg-5 col-11 col-md-7 col-sm-9 bg-secondary-light ms-3 mt-1 py-2 rounded-1">
                                                             <i>
                                                                 <small>{{ $sameUserMsg->message }}</small>
                                                             </i>
@@ -95,18 +129,6 @@
                                         @endif
                                     @endforeach
                                 </div>
-                                {{-- <div class="mb-2 px-2 d-flex gap-2">
-                                    <img style="height: 25px;width: 25px;"
-                                        src="{{ asset(auth()->user()->media->image ?? 'assets/theme/default_user/defuser.png') }}"
-                                        alt="Profile" class="rounded-circle">
-                                    <small class="row">
-                                        <b class="col-12">{{ auth()->user()->name }}</b>
-                                        <div class="col-6 bg-secondary-light ms-2 mt-1 rounded-1">
-                                            <img class="w-100" src="{{ asset('upload/room/2023/01/63b79dde036561672977886.png') }}"
-                                                alt="">
-                                        </div>
-                                    </small>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -131,7 +153,7 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{-- route('liveChat#storeImage') --}}" method="POST" id="image_form"
+                                        <form action="{{ route('doctor.chat.image.store') }}" method="POST" id="image_form"
                                             enctype="multipart/form-data" data-url="{{-- route('liveChat#storeImage') --}}">
                                             @csrf
                                             <input type="hidden" name="room_id" value="{{ $room->id }}">
@@ -151,7 +173,7 @@
                             </div>
                         </div>
                         <input class="form-control" type="text" placeholder="Enter Message" id="msg">
-                        <button class="btn btn-primary" data-url="{{-- route('liveChat#storeMessage') --}}" id="send-btn">send <i
+                        <button class="btn btn-primary" data-url="{{ route('doctor.chat.store') }}" id="send-btn">send <i
                                 class="mdi mdi-near-me"></i></button>
                     </div>
                 </div>
@@ -173,8 +195,8 @@
             $profile = "{{ doctorAuth()->image }}";
             $role = "{{ doctorAuth()->role }}"
             $roomId = "{{ request('room_id') }}";
-            let current_id = "{{ $lastMessage->user->id ?? 0 }}";
-            let current_role = "{{ $lastMessage->user->role ?? 0 }}";
+            let current_id = "{{ $lastMessage->sender_id ?? 0 }}";
+            let current_role = "{{ $lastMessage->sender_role ?? 0 }}";
             let scrollFunc = () => {
                 $('#mainContainer').animate({
                     scrollTop: $('#message_Container').height()
@@ -212,7 +234,7 @@
 
                 data = {
                     id: $id,
-                    roomId: $roomId,
+                    room_id: $roomId,
                     name: $name,
                     profile: $profile,
                     message: $('#msg').val(),
@@ -225,12 +247,12 @@
                     data.parent = 'true';
                 }
 
-                // $.ajax({
-                //     type: "POST",
-                //     url: $(this).data('url'),
-                //     data: data,
-                //     dataType: "json",
-                // });
+                $.ajax({
+                    type: "POST",
+                    url: $(this).data('url'),
+                    data: data,
+                    dataType: "json",
+                });
                 socket.emit('message', data)
             });
 
@@ -240,7 +262,7 @@
                 <div class="text-end m-1 mb-2">
                         <small class='text-start'>
                             <div class="text-end">
-                                <b style="max-width: 320px;background: #198ae3;color: #fff;" class ='d-inline-block p-1 px-2 rounded-1 .info-lig  mx-3 rounded-1 text-start'>
+                                <b style="max-width: 320px;background: #198ae3;color: #fff;" class ='d-inline-block p-1 px-2 rounded-1 mx-3 rounded-1 text-start'>
                                     <i class="">
                                         <small>${data.message}</small>
                                     </i>
@@ -288,71 +310,72 @@
                 scrollFunc()
             })
 
-            //imge start
-            // $('#image_form').submit(function(e) {
-            //     e.preventDefault();
+            // imge start
+            $('#image_form').submit(function(e) {
+                e.preventDefault();
 
-            //     var file = this;
-            //     $.ajax({
-            //         type: $(file).attr('method'),
-            //         url: $(file).attr('action'),
-            //         data: new FormData(file),
-            //         processData:false,
-            //         dataType: "json",
-            //         contentType: false,
-            //         success: function (response) {
+                var file = this;
+                $.ajax({
+                    type: $(file).attr('method'),
+                    url: $(file).attr('action'),
+                    data: new FormData(file),
+                    processData:false,
+                    dataType: "json",
+                    contentType: false,
+                    success: function (response) {
 
-            //         }
-            //     });
+                    }
+                });
 
-            //     const reader = new FileReader();
-            //     reader.addEventListener('load', () => {
-            //         data = {
-            //             id: $id,
-            //             roomId: $roomId,
-            //             name: $name,
-            //             profile: $profile,
-            //             src: reader.result,
-            //             file: $('#image_input')[0].files[0]
-            //         };
+                const reader = new FileReader();
+                reader.addEventListener('load', () => {
+                    data = {
+                        id: $id,
+                        room_id: $roomId,
+                        role : $role,
+                        name: $name,
+                        profile: $profile,
+                        src: reader.result,
+                    };
 
-            //         socket.emit('image', data)
-            //     });
-            //     reader.readAsDataURL($('#image_input')[0].files[0]);
+                    socket.emit('image', data)
+                });
+                reader.readAsDataURL($('#image_input')[0].files[0]);
 
-            // });
+            });
 
-            // socket.on('image', (data) => {
-            //     $sender = `<div class="text-end m-1 mb-2">
-        //             <small class='text-start'>
-        //                 <div class="text-end">
-        //                     <div style="max-width: 320px" class ='d-inline-block p-1 px-2 rounded-1 bg-info-light mx-3 rounded-1 text-start'>
-        //                         <img class="w-100" src="${data.src}" alt="">
-        //                     </div>
-        //                 </div>
-        //             </small>
-        //     </div>`;
+            socket.on('image', (data) => {
+                $sender = `<div class="text-end m-1 mb-2">
+                    <small class='text-start'>
+                        <div class="text-end">
+                            <div style="max-width: 320px;background: #198ae3;color: #fff;" class ='d-inline-block p-1 px-2 rounded-1 mx-3 rounded-1 text-start'>
+                                <img class="w-100" src="${data.src}" alt="">
+                            </div>
+                        </div>
+                    </small>
+            </div>`;
 
-            //     $reciever =  `
-        //     <div class="mb-2 px-2 d-flex gap-2">
-        //             <img style="height: 25px;width: 25px;"
-        //                 src="${data.profile}"
-        //                 alt="Profile" class="rounded-circle">
-        //             <small class="row msg-content">
-        //                 <b class="col-12">${data.name}</b>
-        //                 <div style="max-width: 320px" class="bg-secondary-light py-1 ms-2 my-1 rounded-1">
-        //                     <img class="w-100" src="${data.src}"
-        //                         alt="">
-        //                 </div>
-        //             </small>
-        //         </div>
-        //     `
-            //     data.id == $id ? message_container.innerHTML += $sender : message_container.innerHTML += $reciever;
-            //     $('.dropify-clear').click();
-            //     $('#modal_close').click();
-            //     current_id = data.id;
-            //     scrollFunc();
-            // });
+                $reciever =  `
+            <div class="mb-2 px-2 d-flex gap-2">
+                    <img style="height: 25px;width: 25px;"
+                        src="${data.profile}"
+                        alt="Profile" class="rounded-circle">
+                    <small class="row msg-content">
+                        <b class="col-12">${data.name}</b>
+                        <div style="max-width: 320px;background: rgba(62, 75, 91, 0.2);color: #3e4b5b;" class="bg-secondary-light ms-3 mt-1 py-2 rounded-1">
+                            <img class="w-100" src="${data.src}"
+                                alt="">
+                        </div>
+                    </small>
+                </div>
+            `
+                data.id == $id && data.role == $role ? message_container.innerHTML += $sender : message_container.innerHTML += $reciever;
+                $('.dropify-clear').click();
+                $('#modal_close').click();
+                current_id = data.id;
+                current_role = data.role;
+                scrollFunc();
+            });
             scrollFunc();
         });
     </script>

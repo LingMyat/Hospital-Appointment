@@ -7,12 +7,16 @@
 <script src="{{ asset('assets/patient/lib/tempusdominus/js/moment.min.js') }}"></script>
 <script src="{{ asset('assets/patient/lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
 <script src="{{ asset('assets/patient/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-{{-- Dropify --}}
-<script src="{{ asset('assets/theme/lib/dropify/dropify.min.js') }}"></script>
-@include('Patient.Layout.Addition.addition-script')
+
 
 <!-- Template Javascript -->
 <script src="{{ asset('assets/patient/js/main.js') }}"></script>
+{{-- Dropify --}}
+<script src="{{ asset('assets/theme/lib/dropify/dropify.min.js') }}"></script>
+{{-- socket.io --}}
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"
+    integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI" crossorigin="anonymous">
+</script>
 
 <script>
     $(document).ready(function() {

@@ -141,6 +141,8 @@ Route::controller(PatientChatController::class)
     ->prefix('chats')
     ->group(function () {
         Route::get('/show', 'show')->middleware('patientAuth');
+        Route::post('/','store')->name('patient.chat.store');
+        Route::post('/image','storeImage')->name('patient.chat.image.store');
     });
 
 //Doctor
@@ -170,6 +172,8 @@ Route::prefix('doctor')
                     ->group(function () {
                         Route::get('/', 'index')->name('doctor.chat');
                         Route::get('/chat', 'show');
+                        Route::post('/','store')->name('doctor.chat.store');
+                        Route::post('/image','storeImage')->name('doctor.chat.image.store');
                     });
             });
     });

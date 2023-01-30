@@ -9,18 +9,29 @@ class LiveChatMessage extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'sender_id','sender_role','room_id','message','parent_id'
+        'sender_id',
+        'sender_role',
+        'room_id',
+        'message',
+        'parent_id'
     ];
+
+    const UPLOAD_PATH = 'upload/messages';
+
     public function room(){
        return $this->belongsTo(Room::class,'room_id');
     }
-    public function user()
+
+    public function doctor()
     {
-        if ($this->sender_role == 'doctor') {
-            return $this->belongsTo(Doctor::class,'sender_id');
-        }
-       return $this->belongsTo(Patient::class,'user_id');
+        return $this->belongsTo(Doctor::class,'sender_id');
     }
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class,'sender_id');
+    }
+
     public function scopeRoomIn($query,$roomId)
     {
         return $query->where('room_id',$roomId);
