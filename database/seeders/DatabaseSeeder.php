@@ -14,9 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(TestPermissionSeeder::class);
-        $this->call(CreateAdminUserSeeder::class);
-        $this->call(DiseasesSeeder::class);
-        $this->call(NrcPrefixSeeder::class);
+        // $this->call(TestPermissionSeeder::class);
+        // $this->call(CreateAdminUserSeeder::class);
+        // $this->call(DiseasesSeeder::class);
+        // $this->call(NrcPrefixSeeder::class);
+        $this->call(DaySeeder::class);
     }
 }
