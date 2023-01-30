@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Doctor\AuthController as DoctorAuthController;
 use App\Http\Controllers\Doctor\ChatController as DoctorChatController;
+use App\Http\Controllers\Doctor\DoctorTimeController;
 use App\Http\Controllers\Doctor\HomeController as DoctorHomeController;
 use App\Http\Controllers\Patient\AuthController as PatientAuthController;
 use App\Http\Controllers\Patient\ChatController as PatientChatController;
@@ -174,6 +175,12 @@ Route::prefix('doctor')
                         Route::get('/chat', 'show');
                         Route::post('/','store')->name('doctor.chat.store');
                         Route::post('/image','storeImage')->name('doctor.chat.image.store');
+                    });
+                Route::controller(DoctorTimeController::class)
+                    ->prefix('doctor-time')
+                    ->group(function(){
+                        Route::get('/','doctorTimeForm')->name('doctor.time.form');
+                        Route::post('/','store')->name('doctor.time.store');
                     });
             });
     });
