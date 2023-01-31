@@ -69,7 +69,7 @@
                         $('#appointment_form_modal').html(`
                             <div class="modal fade" id="appointmentModal" tabindex="-1"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
                                     <div class="modal-content" id="appointment-modal-content">
 
                                     </div>
@@ -82,14 +82,14 @@
                             $.ajax({
                                 type: "get",
                                 url: $(this).data('url'),
-                                success: function(view) {
-                                    $('#appointment-modal-content').html(
-                                        view);
-                                },
                                 error: function(response) {
                                     let redirect = window.location.href;
                                     window.location.href=`/login?redirect=${redirect}`;
-                                }
+                                },
+                                success: function(view) {
+                                    $('#appointment-modal-content').html(view);
+                                    $("select").niceSelect();
+                                },
                             });
                         })
                     }

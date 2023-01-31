@@ -11,8 +11,6 @@
 <link href="{{ asset('assets/patient/css/bootstrap.min.css') }}" rel="stylesheet">
 <!-- Template Stylesheet -->
 <link href="{{ asset('assets/patient/css/style.css') }}" rel="stylesheet">
-{{-- Dropify --}}
-<link rel="stylesheet" href="{{ asset('assets/theme/lib/dropify/dropify.min.css') }}">
 @include('Patient.Layout.Addition.addition-css')
 <style>
     .hero-header
