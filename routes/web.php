@@ -11,11 +11,11 @@ use App\Http\Controllers\Doctor\AuthController as DoctorAuthController;
 use App\Http\Controllers\Doctor\ChatController as DoctorChatController;
 use App\Http\Controllers\Doctor\DoctorTimeController;
 use App\Http\Controllers\Doctor\HomeController as DoctorHomeController;
+use App\Http\Controllers\Patient\AppointmentController as PatientAppointmentController;
 use App\Http\Controllers\Patient\AuthController as PatientAuthController;
 use App\Http\Controllers\Patient\ChatController as PatientChatController;
 use App\Http\Controllers\Patient\DoctorController as PatientDoctorController;
 use App\Http\Controllers\Patient\HomeController as PatientHomeController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -127,6 +127,7 @@ Route::controller(PatientDoctorController::class)
     ->prefix('doctors')
     ->group(function () {
         Route::get('/{slug}', 'show')->name('patient.doctor.show');
+        Route::get('/{slug}/times','doctorTimes')->name('patient.doctor.time');
     });
 
 Route::controller(PatientAuthController::class)
@@ -146,6 +147,12 @@ Route::controller(PatientChatController::class)
         Route::post('/image','storeImage')->name('patient.chat.image.store');
     });
 
+Route::controller(PatientAppointmentController::class)
+    ->prefix('appointments')
+    ->group(function () {
+        Route::get('/{id}/form','create')->name('patient.appointment.form');
+        Route::post('/')->name('ptient.appointment.store');
+    });
 //Doctor
 Route::prefix('doctor')
     ->group(function () {
