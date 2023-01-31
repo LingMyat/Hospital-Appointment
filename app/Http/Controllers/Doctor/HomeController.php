@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
+use App\Models\Day;
 use App\Models\Disease;
 use Illuminate\Http\Request;
 
@@ -18,11 +19,12 @@ class HomeController extends Controller
     public function profile(Request $request)
     {
         $doctor = doctorAuth();
+        $days = Day::with('doctorTimes')->get();
         $mainDiseases = Disease::publish()
             ->onlyParent()
             ->with('media','children')
             ->active()
             ->get();
-        return view('Doctor.auth.profile',compact('doctor','mainDiseases'));
+        return view('Doctor.auth.profile',compact('doctor','mainDiseases','days'));
     }
 }

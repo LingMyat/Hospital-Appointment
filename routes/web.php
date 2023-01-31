@@ -61,14 +61,14 @@ Route::prefix('admin')
                     ->group(function () {
                         Route::get('/create', 'mainCreate')->name('admin.main-disease.create');
                         Route::post('/create', 'mainStore')->name('admin.main-disease.store');
-                        Route::patch('/edit/{id}', 'mainUpdate')->name('admin.main-disease.update');
+                        Route::patch('/{id}/edit', 'mainUpdate')->name('admin.main-disease.update');
                     });
 
                 Route::prefix('sub-diseases')
                     ->group(function () {
                         Route::get('/create', 'subCreate')->name('admin.sub-disease.create');
                         Route::post('/create', 'subStore')->name('admin.sub-disease.store');
-                        Route::patch('/edit/{id}', 'subUpdate')->name('admin.sub-disease.update');
+                        Route::patch('/{id}/edit', 'subUpdate')->name('admin.sub-disease.update');
                     });
 
                 Route::get('diseases/{id}', 'destroy')->name('admin.disease.destroy');
@@ -80,8 +80,8 @@ Route::prefix('admin')
             ->group(function () {
                 Route::get('/create', 'create')->name('admin.permission.create');
                 Route::post('/create', 'store');
-                Route::get('/edit/{id}', 'edit')->name('admin.permission.edit');
-                Route::patch('/edit/{id}', 'update');
+                Route::get('/{id}/edit', 'edit')->name('admin.permission.edit');
+                Route::patch('/{id}/edit', 'update');
                 Route::get('/{id}', 'destroy')->name('admin.permission.destroy');
             });
 
@@ -91,8 +91,8 @@ Route::prefix('admin')
             ->group(function () {
                 Route::get('/create', 'create')->name('admin.role.create');
                 Route::post('/create', 'store');
-                Route::get('/edit/{id}', 'edit')->name('admin.role.edit');
-                Route::patch('/edit/{id}', 'update');
+                Route::get('/{id}/edit', 'edit')->name('admin.role.edit');
+                Route::patch('/{id}/edit', 'update');
                 Route::get('/{id}', 'destroy')->name('admin.role.destroy');
             });
 
@@ -102,8 +102,8 @@ Route::prefix('admin')
             ->group(function () {
                 Route::get('/create', 'create')->name('admin.user.create');
                 Route::post('/create', 'store');
-                Route::get('/edit/{id}', 'edit')->name('admin.user.edit');
-                Route::patch('/edit/{id}', 'update');
+                Route::get('/{id}/edit', 'edit')->name('admin.user.edit');
+                Route::patch('/{id}/edit', 'update');
                 Route::get('/{id}', 'destroy')->name('admin.user.destroy');
             });
 
@@ -181,6 +181,8 @@ Route::prefix('doctor')
                     ->group(function(){
                         Route::get('/','doctorTimeForm')->name('doctor.time.form');
                         Route::post('/','store')->name('doctor.time.store');
+                        Route::patch('/{id}/update','update')->name('doctor.time.update');
+                        Route::get('/{id}/delete','destroy')->name('doctor.time.destroy');
                     });
             });
     });

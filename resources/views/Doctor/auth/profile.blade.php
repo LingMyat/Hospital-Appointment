@@ -67,6 +67,38 @@
                                     data-default-file="{{ $doctor->image }}" />
                             </div>
                         </div>
+                        @if ($doctor->times->isNotEmpty())
+                            <div class="form-group row">
+                                <label for="" class="col-sm-3 col-form-label">Times</label>
+                                <div class="col-sm-9">
+                                    @foreach ($days as $day)
+                                        <div>
+                                            @foreach ($day->doctorTimes as $time)
+                                                @if ($time->doctor_id == $doctor->id)
+                                                    @php
+                                                        $time_from = date('h:i A', strtotime($time->time_from));
+                                                        $time_to = date('h:i A', strtotime($time->time_to));
+                                                    @endphp
+                                                    <label class='badge badge-success me-2'>{{ $time_from }} - {{ $time_to }}/{{ $time->day->name }} <a
+                                                        style="cursor: pointer"
+                                                        data-time-from="{{ $time->time_from }}"
+                                                        data-time-to="{{ $time->time_to }}"
+                                                        data-day="{{ $time->day->id }}"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal"
+                                                        data-url="{{ route('doctor.time.update',$time->id) }}"
+                                                        class="text-white edit-time-btn">
+                                                        <i class="mdi mdi-lead-pencil"></i></a> <a
+                                                        href="{{ route('doctor.time.destroy',$time->id) }}" class="text-white">
+                                                        <i class="mdi mdi-close"></i>
+                                                    </a></label>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
                         <div class="form-group row">
                             <label for="name" class="col-sm-3 col-form-label">Username</label>
                             <div class="col-sm-9">
@@ -143,18 +175,43 @@
                 allowClear: true
             })
 
+            $getFormUrl = $('#add_btn').data('url');
+
             $('#add_btn').click(function(e) {
                 e.preventDefault();
 
                 $.ajax({
                     type: "get",
-                    url: $(this).data('url'),
+                    url: $getFormUrl,
                     success: function(view) {
                         $('#modal-content').html(view);
                         $('#day_select').niceSelect();
                     }
                 });
             });
+
+            $('.edit-time-btn').click(function(e) {
+                e.preventDefault();
+                let time_from = $(this).data('time-from');
+                let time_to = $(this).data('time-to');
+                let day_id = $(this).data('day');
+                let url = $(this).data('url');
+                $.ajax({
+                    type: "GET",
+                    url: $getFormUrl,
+                    success: function(view) {
+                        $('#modal-content').html(view);
+                        $(`#day_select option[value=${day_id}]`).attr('selected', 'selected');
+                        $('#day_select').niceSelect();
+                        $('#time_from').val(time_from);
+                        $('#time_to').val(time_to)
+
+                        $('#time_form').attr('action', url);
+                        $('#time_form_method').val('patch');
+                    }
+                });
+            });
+
         });
     </script>
 @endsection

@@ -49,6 +49,11 @@ class Doctor extends Model
         return $query->where("status",true);
     }
 
+    public function times()
+    {
+        return $this->hasMany(DoctorTime::class);
+    }
+
     public function Specialities()
     {
        return $this->belongsToMany(
