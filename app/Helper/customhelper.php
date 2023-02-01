@@ -7,6 +7,17 @@ function getStatusBadge($value){
     return $value==true? "<label class='badge badge-success'>Active</label>" : "<label class='badge badge-danger'>Inactive</label>";
 }
 
+function getAppointmentStatus($status)
+{
+    if ($status == 'success') {
+        return "<label class='badge badge-success'>Success</label>";
+    } elseif ($status == 'canceled') {
+        return "<label class='badge badge-danger'>Canceled</label>";
+    } else {
+        return "<label class='badge badge-primary'>Processing</label>";
+    }
+}
+
 function patientAuth()
 {
     if (session('patientId')) {

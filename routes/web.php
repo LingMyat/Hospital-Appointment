@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Doctor\AppointmentController as DoctorAppointmentController;
 use App\Http\Controllers\Doctor\AuthController as DoctorAuthController;
 use App\Http\Controllers\Doctor\ChatController as DoctorChatController;
 use App\Http\Controllers\Doctor\DoctorTimeController;
@@ -127,7 +128,7 @@ Route::controller(PatientDoctorController::class)
     ->prefix('doctors')
     ->group(function () {
         Route::get('/{slug}', 'show')->name('patient.doctor.show');
-        Route::get('/{slug}/times','doctorTimes')->name('patient.doctor.time');
+        Route::get('/{slug}/times', 'doctorTimes')->name('patient.doctor.time');
     });
 
 Route::controller(PatientAuthController::class)
@@ -143,15 +144,15 @@ Route::controller(PatientChatController::class)
     ->prefix('chats')
     ->group(function () {
         Route::get('/show', 'show')->middleware('patientAuth');
-        Route::post('/','store')->name('patient.chat.store');
-        Route::post('/image','storeImage')->name('patient.chat.image.store');
+        Route::post('/', 'store')->name('patient.chat.store');
+        Route::post('/image', 'storeImage')->name('patient.chat.image.store');
     });
 
 Route::controller(PatientAppointmentController::class)
     ->prefix('appointments')
     ->group(function () {
-        Route::get('/{id}/form','create')->name('patient.appointment.form');
-        Route::post('/','store')->name('patient.appointment.store');
+        Route::get('/{id}/form', 'create')->name('patient.appointment.form');
+        Route::post('/', 'store')->name('patient.appointment.store');
     });
 //Doctor
 Route::prefix('doctor')
@@ -180,16 +181,22 @@ Route::prefix('doctor')
                     ->group(function () {
                         Route::get('/', 'index')->name('doctor.chat');
                         Route::get('/chat', 'show');
-                        Route::post('/','store')->name('doctor.chat.store');
-                        Route::post('/image','storeImage')->name('doctor.chat.image.store');
+                        Route::post('/', 'store')->name('doctor.chat.store');
+                        Route::post('/image', 'storeImage')->name('doctor.chat.image.store');
                     });
                 Route::controller(DoctorTimeController::class)
                     ->prefix('doctor-time')
-                    ->group(function(){
-                        Route::get('/','doctorTimeForm')->name('doctor.time.form');
-                        Route::post('/','store')->name('doctor.time.store');
-                        Route::patch('/{id}/update','update')->name('doctor.time.update');
-                        Route::get('/{id}/delete','destroy')->name('doctor.time.destroy');
+                    ->group(function () {
+                        Route::get('/', 'doctorTimeForm')->name('doctor.time.form');
+                        Route::post('/', 'store')->name('doctor.time.store');
+                        Route::patch('/{id}/update', 'update')->name('doctor.time.update');
+                        Route::get('/{id}/delete', 'destroy')->name('doctor.time.destroy');
+                    });
+                Route::controller(DoctorAppointmentController::class)
+                    ->prefix('appointments')
+                    ->group(function () {
+                        Route::get('/', 'index')->name('doctor.appointment');
+                        Route::get('/{id}/show','show')->name('doctor.appointment.show');
                     });
             });
     });

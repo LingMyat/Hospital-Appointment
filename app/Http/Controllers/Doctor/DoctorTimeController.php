@@ -14,47 +14,47 @@ class DoctorTimeController extends Controller
     public function doctorTimeForm(Request $request)
     {
         $days = Day::all();
-        return view('Doctor.page.doctor-time.store-form',compact('days'));
+        return view('Doctor.page.doctor-time.store-form', compact('days'));
     }
 
     //store
     public function store(Request $request)
     {
         $request->validate([
-            'from_time'=>'required',
-            'to_time'=>'required',
-            'day'=>'required'
+            'from_time' => 'required',
+            'to_time' => 'required',
+            'day' => 'required'
         ]);
 
         DoctorTime::create([
-            'time_from'=>$request->from_time,
-            'time_to'=>$request->to_time,
-            'day_id'=>$request->day,
-            'doctor_id'=>doctorAuth()->id
+            'time_from' => $request->from_time,
+            'time_to' => $request->to_time,
+            'day_id' => $request->day,
+            'doctor_id' => doctorAuth()->id
         ]);
-        return redirect()->back()->with('success','Successfully added!');
+        return redirect()->back()->with('success', 'Successfully added!');
     }
 
     //update
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'from_time'=>'required',
-            'to_time'=>'required',
-            'day'=>'required'
+            'from_time' => 'required',
+            'to_time' => 'required',
+            'day' => 'required'
         ]);
         DoctorTime::findOrFail($id)->update([
-            'time_from'=>$request->from_time,
-            'time_to'=>$request->to_time,
-            'day_id'=>$request->day,
+            'time_from' => $request->from_time,
+            'time_to' => $request->to_time,
+            'day_id' => $request->day,
         ]);
-        return redirect()->back()->with('success','Successfully updated!');
+        return redirect()->back()->with('success', 'Successfully updated!');
     }
 
     //destroy
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
         DoctorTime::findOrFail($id)->delete();
-        return redirect()->back()->with('success','Successfully deleted!');
+        return redirect()->back()->with('success', 'Successfully deleted!');
     }
 }

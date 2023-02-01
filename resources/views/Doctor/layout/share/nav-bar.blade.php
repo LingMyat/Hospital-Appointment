@@ -21,6 +21,14 @@
           <i class="mdi mdi-home menu-icon"></i>
         </a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('doctor.appointment') }}">
+          <span class="menu-title">Appointments</span>
+          <i class="mdi mdi-content-paste menu-icon"></i>
+        </a>
+      </li>
+
       <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
           <span class="menu-title">Live Chat</span>
@@ -30,10 +38,11 @@
         <div class="collapse" id="ui-basic">
           <ul class="nav flex-column sub-menu">
             <li class="nav-item"> <a class="nav-link" href="{{ route('doctor.chat') }}">Chat Rooms</a></li>
-            <li class="nav-item"> <a class="nav-link" href="">Appointment Chat</a></li>
+            <li class="nav-item"> <a class="nav-link" href="">Messenger</a></li>
           </ul>
         </div>
       </li>
+
       {{-- <li class="nav-item">
         <a class="nav-link" href="pages/icons/mdi.html">
           <span class="menu-title">Icons</span>
@@ -58,20 +67,6 @@
           <i class="mdi mdi-table-large menu-icon"></i>
         </a>
       </li> --}}
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="collapse" href="#user_management" aria-expanded="false" aria-controls="ui-basic">
-          <span class="menu-title">User Management</span>
-          <i class="menu-arrow"></i>
-          <i class="mdi mdi-account-multiple"></i>
-        </a>
-        <div class="collapse" id="user_management">
-          <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="">Users</a></li>
-            <li class="nav-item"> <a class="nav-link" href="">Roles</a></li>
-            <li class="nav-item"> <a class="nav-link" href="">Permissions</a></li>
-          </ul>
-        </div>
-      </li>
     </ul>
   </nav>
    <!-- partial -->

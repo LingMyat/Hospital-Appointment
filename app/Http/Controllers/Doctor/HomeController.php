@@ -22,9 +22,9 @@ class HomeController extends Controller
         $days = Day::with('doctorTimes')->get();
         $mainDiseases = Disease::publish()
             ->onlyParent()
-            ->with('media','children')
+            ->with('media', 'children')
             ->active()
             ->get();
-        return view('Doctor.auth.profile',compact('doctor','mainDiseases','days'));
+        return view('Doctor.auth.profile', compact('doctor', 'mainDiseases', 'days'));
     }
 }

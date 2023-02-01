@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('set null');
             $table->unsignedBigInteger('doctor_time_id')->nullable();
             $table->foreign('doctor_time_id')->references('id')->on('doctor_times')->onDelete('set null');
-            $table->string('time');
+            $table->string('time')->nullable();
             $table->unsignedBigInteger('disease_id')->nullable();
             $table->foreign('disease_id')->references('id')->on('diseases')->onDelete('set null');
             $table->longText('note')->nullable();

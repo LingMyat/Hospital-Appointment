@@ -40,7 +40,7 @@
             </div>
 
             <div class="col-md-6 mb-2">
-                <label for="" class="form-label"><span class="text-danger">*</span> Disease <span class="text-danger">*</span></label>
+                <label for="" class="form-label"><span class="text-danger">*</span> Diagnosis <span class="text-danger">*</span></label>
                 <select class="w-100" name="disease" id="disease_select">
                     <option value="">Select</option>
                     @foreach ($time->doctor->Specialities as $disease)
