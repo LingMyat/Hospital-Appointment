@@ -14,6 +14,8 @@
 <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"
     integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI" crossorigin="anonymous">
 </script>
+{{-- Flatpicker --}}
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 @include('Patient.Layout.Addition.addition-script')
 <script>
     $(document).ready(function() {

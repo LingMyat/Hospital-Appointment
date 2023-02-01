@@ -63,7 +63,7 @@ class DiseaseController extends Controller
         public function subStore(Request $request)
         {
             $request->validate([
-                'name'=>'required',
+                'name'=>'required|max:100',
                 'main_disease'=>'required',
                 'image'=>'required|mimes:png,jpg,jpeg,jfif'
             ]);
@@ -93,7 +93,7 @@ class DiseaseController extends Controller
         public function subUpdate(Request $request,$id)
         {
             $request->validate([
-                'name'=>'required',
+                'name'=>'required|max:100',
                 'main_disease'=>'required',
                 'image'=>'mimes:png,jpg,jpeg,jfif'
             ]);

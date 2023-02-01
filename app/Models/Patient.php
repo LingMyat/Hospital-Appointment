@@ -17,6 +17,7 @@ class Patient extends Model
         'slug',
         'gender',
         'address',
+        'date_of_birth',
         'phone',
         'email',
         'password',

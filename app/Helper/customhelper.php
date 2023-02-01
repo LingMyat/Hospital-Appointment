@@ -46,3 +46,19 @@ function doctorInfo()
     }
     return true;
 }
+
+function patientAppointmentCheck() {
+    $patient = patientAuth();
+    $arr = [
+        $patient->phone,
+        $patient->address,
+        $patient->gender,
+        $patient->date_of_birth,
+    ];
+    if (in_array(NUll,$arr)) {
+        return false;
+    }
+    return true;
+}
+
+

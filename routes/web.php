@@ -151,7 +151,7 @@ Route::controller(PatientAppointmentController::class)
     ->prefix('appointments')
     ->group(function () {
         Route::get('/{id}/form','create')->name('patient.appointment.form');
-        Route::post('/')->name('ptient.appointment.store');
+        Route::post('/','store')->name('patient.appointment.store');
     });
 //Doctor
 Route::prefix('doctor')

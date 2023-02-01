@@ -89,6 +89,8 @@
                                 success: function(view) {
                                     $('#appointment-modal-content').html(view);
                                     $("select").niceSelect();
+                                    $('#date_of_birth').flatpickr();
+                                    $('#date_of_birth').attr('readonly', false);
                                 },
                             });
                         })

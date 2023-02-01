@@ -11,6 +11,8 @@
 <link href="{{ asset('assets/patient/css/bootstrap.min.css') }}" rel="stylesheet">
 <!-- Template Stylesheet -->
 <link href="{{ asset('assets/patient/css/style.css') }}" rel="stylesheet">
+{{-- Flatpicker --}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @include('Patient.Layout.Addition.addition-css')
 <style>
     .hero-header
