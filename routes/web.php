@@ -167,6 +167,7 @@ Route::controller(PatientChatController::class)
 Route::controller(PatientAppointmentController::class)
     ->prefix('appointments')
     ->group(function () {
+        Route::get('/','index')->name('patient.appointment');
         Route::get('/{id}/form', 'create')->name('patient.appointment.form');
         Route::post('/', 'store')->name('patient.appointment.store');
     });

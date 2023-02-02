@@ -108,7 +108,6 @@
                     url: $(this).children("option:selected").data('url'),
                     success: function (view) {
                         $('#nrc_name_container').html(view);
-                        $('.niceSelect').niceSelect();
                     }
                 });
             });

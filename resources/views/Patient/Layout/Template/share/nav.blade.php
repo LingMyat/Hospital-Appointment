@@ -19,7 +19,7 @@
                         <div class="dropdown-menu m-0">
                             @if (patientAuth())
                                 <a href="{{ route('patient.account.profile') }}" class="dropdown-item">My Account</a>
-                                <a href="search.html" class="dropdown-item">My Appointments</a>
+                                <a href="{{ route('patient.appointment') }}" class="dropdown-item">My Appointments</a>
                                 <a href="{{ route('patient.logout') }}" class="dropdown-item">Log out</a>
                             @else
                                 <a href="{{ route('patient.loginPage') }}" class="dropdown-item">Sign in</a>

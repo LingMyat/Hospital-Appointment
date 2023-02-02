@@ -10,6 +10,13 @@ use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
+    //index
+    public function index(Request $request)
+    {
+       $appointments = Appointment::patientIn(patientAuth()->id)->with('patient','doctor','doctorTime')->get();
+       return view('Patient.page.Profile.appointment',compact('appointments'));
+    }
+
     //create
     public function create(Request $request, $id)
     {
