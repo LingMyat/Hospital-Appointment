@@ -42,8 +42,9 @@ class AppointmentController extends Controller
         $appointment = Appointment::doctorIn($time->doctor->id)
             ->doctorTimeIn(
                 $time->id ?? $request->doctor_time_id
-            )->orderBy('id', 'desc')
-            ->whereIn(
+            )->patientIn(
+                patientAuth()->id
+            )->whereIn(
                 'status',
                 ['pending', 'success']
             )

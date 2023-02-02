@@ -88,7 +88,7 @@
             <i class="mdi mdi-bell-outline"></i>
             <span class="count-symbol bg-danger"></span>
           </a>
-          <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+          <div class="dropdown-menu dropdown-menu-left navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
             <h6 class="p-3 mb-0">Notifications</h6>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item preview-item">

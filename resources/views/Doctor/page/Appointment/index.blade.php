@@ -29,6 +29,7 @@
                         <table class="table table-hover Datatable">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Patient</th>
                                     <th>Title</th>
                                     <th>Appointment Time</th>
@@ -40,6 +41,7 @@
                             <tbody>
                                 @foreach ($appointments as $key => $appointment)
                                     <tr>
+                                        <td>{{ $key+=1 }}</td>
                                         <td>{{ $appointment->patient->name }}</td>
                                         <td>{{ $appointment->disease->name }}</td>
                                         @php

@@ -37,6 +37,17 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        let arr = ["{{ route('forget.success') }}","{{ route('forget.error') }}"];
+        setTimeout(() => {
+            arr.forEach(element => {
+                $.ajax({
+                    type: "POST",
+                    url: element,
+                });
+            });
+        }, 100);
+
     });
 </script>
 {{-- Sweetalert 2 --}}

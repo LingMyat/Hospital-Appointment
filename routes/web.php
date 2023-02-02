@@ -34,6 +34,16 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::prefix('sessions/forget')
+    ->group(function () {
+        Route::post('/success', function () {
+            session()->forget('success');
+        })->name('forget.success');
+        Route::post('/error', function () {
+            session()->forget('error');
+        })->name('forget.error');
+    });
+
 Route::prefix('admin')
     ->group(function () {
         Route::controller(AuthController::class)
@@ -196,7 +206,9 @@ Route::prefix('doctor')
                     ->prefix('appointments')
                     ->group(function () {
                         Route::get('/', 'index')->name('doctor.appointment');
-                        Route::get('/{id}/show','show')->name('doctor.appointment.show');
+                        Route::get('/{id}/show', 'show')->name('doctor.appointment.show');
+                        Route::post('/{id}/success', 'success')->name('doctor.appointment.update.success');
+                        Route::post('/{id}/cancel', 'cancel')->name('doctor.appointment.update.cancel');
                     });
             });
     });
