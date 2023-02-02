@@ -15,11 +15,11 @@
                     <a href="{{ route('patient.chat') }}" class="nav-item nav-link {{Request::segment(1) == 'chats'?'active':'' }}">Chats</a>
                     <a href="service.html" class="nav-item nav-link">About</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Account</a>
+                        <a href="#" class="nav-link dropdown-toggle {{Request::segment(1) == 'account'?'active':'' }}" data-bs-toggle="dropdown">Account</a>
                         <div class="dropdown-menu m-0">
                             @if (patientAuth())
-                                <a href="team.html" class="dropdown-item">My Account</a>
-                                <a href="search.html" class="dropdown-item">Search</a>
+                                <a href="{{ route('patient.account.profile') }}" class="dropdown-item">My Account</a>
+                                <a href="search.html" class="dropdown-item">My Appointments</a>
                                 <a href="{{ route('patient.logout') }}" class="dropdown-item">Log out</a>
                             @else
                                 <a href="{{ route('patient.loginPage') }}" class="dropdown-item">Sign in</a>

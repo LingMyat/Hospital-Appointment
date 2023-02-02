@@ -6,6 +6,7 @@ use App\Helper\PatientAuth;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Nrc;
 use App\Traits\MakeSlug;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -90,5 +91,42 @@ class AuthController extends Controller
     {
         PatientAuth::logout();
         return to_route('HOME')->with('success', 'Successfully Logged Out From Your Account!');
+    }
+
+    //updateProfile
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'name'=>'required|max:255',
+            'email'=>'required|email',
+            'phone'=>'required',
+            'address'=>'required',
+            'date_of_birth'=>'required',
+            'image'=>'mimes:png,jpg,jpeg'
+        ]);
+
+        $requestData = $request->all();
+
+        if($request->hasFile('image')){
+            $path = Patient::UPLOAD_PATH."/" . date("Y") . "/" . date("m") . "/";
+            $fileName = uniqid().time().'.'.$request->image->extension();
+            $request->image->move(public_path($path), $fileName);
+            $requestData['image'] = $path . $fileName;
+        }
+
+        $requestData['NRC'] = $request->nrc_number;
+        if ($request->nrc_name) {
+            if (!in_array(null,[$request->nrc_code,$request->mid_txt,$request->nrc_name,$request->nrc_number])) {
+                $nrc = Nrc::where([
+                    'nrc_code'=>$request->nrc_code,
+                    'name_mm'=>$request->nrc_name
+                ])->first();
+                $requestData['NRC'] = $request->nrc_number;
+                $requestData['nrc_id'] = $nrc->id;
+            }
+        }
+
+        Patient::findOrFail(patientAuth()->id)->update($requestData);
+        return redirect()->back()->with('success','Successfully updated profile!');
     }
 }

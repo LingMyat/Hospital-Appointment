@@ -14,6 +14,7 @@ class Patient extends Model
         'name',
         'image',
         'NRC',
+        'nrc_id',
         'slug',
         'gender',
         'address',
@@ -29,6 +30,8 @@ class Patient extends Model
         'created_at',
         'updated_at',
     ];
+
+    const UPLOAD_PATH = 'upload/patients';
 
     protected function image():Attribute
     {
@@ -47,6 +50,11 @@ class Patient extends Model
     public function scopeActive($query)
     {
         return $query->where("status",true);
+    }
+
+    public function nrc()
+    {
+        return $this->belongsTo(Nrc::class,'nrc_id','id');
     }
 
 }

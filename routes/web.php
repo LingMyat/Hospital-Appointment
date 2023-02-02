@@ -132,6 +132,11 @@ Route::controller(PatientHomeController::class)
         Route::get('/home', 'home')->name('HOME');
         Route::get('/doctors', 'doctors')->name('patient.doctors');
         Route::get('/chats', 'chats')->name('patient.chat');
+        Route::prefix('account')
+            ->group(function () {
+                Route::get('/profile','profile')->name('patient.account.profile');
+            });
+        Route::post('/{nrc_code}/nrc-name','nrcName')->name('patient.nrc.names');
     });
 
 Route::controller(PatientDoctorController::class)
@@ -148,6 +153,7 @@ Route::controller(PatientAuthController::class)
         Route::get('/register', 'registerPage')->name('patient.registerPage');
         Route::post('/register', 'register');
         Route::get('/logout', 'logout')->name('patient.logout');
+        Route::patch('/account/profile','updateProfile');
     });
 
 Route::controller(PatientChatController::class)
