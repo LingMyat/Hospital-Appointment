@@ -214,6 +214,8 @@ Route::prefix('doctor')
                     ->group(function () {
                         Route::get('/', 'index')->name('doctor.appointment');
                         Route::get('/{id}/show', 'show')->name('doctor.appointment.show');
+                        Route::get('{appointment_id}/form','statusForm')->name('doctor.appointment.form');
+                        Route::patch('/{id}/update','update')->name('doctor.appointment.update');
                         Route::post('/{id}/success', 'success')->name('doctor.appointment.update.success');
                         Route::post('/{id}/cancel', 'cancel')->name('doctor.appointment.update.cancel');
                     });

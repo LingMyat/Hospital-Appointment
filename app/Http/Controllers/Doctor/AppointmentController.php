@@ -24,6 +24,45 @@ class AppointmentController extends Controller
         return view('Doctor.page.Appointment.show', compact('appointment'));
     }
 
+    public function statusForm(Request $request,$appointment_id)
+    {
+        $appointment = Appointment::findOrFail($appointment_id);
+        return view('Doctor.page.Appointment.status-edit-form',compact('appointment'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $appointment = Appointment::findOrFail($id);
+        if ($request->status == 'success') {
+            $doctorTime = DoctorTime::findOrFail($appointment->doctor_time_id);
+            $lastSuccessAppointment = Appointment::doctorIn(
+                $appointment->doctor_id ?? $doctorTime->doctor_id
+            )->doctorTimeIn(
+                $appointment->doctor_time_id ?? $doctorTime->id
+            )->where([
+                'status' => 'success'
+            ])->orderBy(
+                'id','desc'
+            )->first();
+            $time = $doctorTime->time_from;
+            if ($lastSuccessAppointment) {
+                $time = date('H:i', strtotime($lastSuccessAppointment->time) + 1200);
+            }
+
+            $appointment->update([
+                'status'=>'success',
+                'time'=>$time
+            ]);
+
+        } elseif ($request->status == 'canceled') {
+            $appointment->update([
+                'status' => 'canceled',
+                'cancel_remark'=>$request->cancel_remark
+            ]);
+        }
+        return redirect()->back()->with('success','Successfully Updated!');
+    }
+
     //success
     public function success(Request $request, $id)
     {
@@ -54,8 +93,11 @@ class AppointmentController extends Controller
     //cancel
     public function cancel(Request $request, $id)
     {
-        Appointment::findOrFail($id)->update([
-            'status' => 'canceled'
+        $appointment = Appointment::findOrFail($id);
+        $doctor = $appointment->doctorTime->doctor;
+        $appointment->update([
+            'status' => 'canceled',
+            'cancel_remark'=>"ဤချိန်းဆိုမှုအပိုင်းသည် လူပြည့်သွားပါပြီ။ ဤအပိုင်းကို နောက်အပတ်တွင် ပြန်လည်စတင်ပါမည် သို့မဟုတ် ဒေါက်တာ $doctor->name ၏ နောက်ထပ်ချိန်းဆိုမှုကို ကြိုးစားကြည့်ပါ။"
         ]);
         session()->put('success','Successfully Updated');
         return response()->json('success', 200);

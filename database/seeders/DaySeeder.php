@@ -16,16 +16,19 @@ class DaySeeder extends Seeder
     public function run()
     {
         $days = [
-            'Sunday',
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday'
+            ['Sunday','တနင်္ဂနွေနေ့'],
+            ['Monday','တနင်္လာနေ့'],
+            ['Tuesday','အင်္ဂါနေ့'],
+            ['Wednesday','ဗုဒ္ဓဟူးနေ့'],
+            ['Thursday','ကြာသပတေးနေ့'],
+            ['Friday','သောကြာနေ့'],
+            ['Saturday','စနေနေ့']
         ];
         foreach ($days as $day) {
-            Day::create(['name'=>$day]);
+            Day::create([
+                'name'=>$day[0],
+                'name_mm'=>$day[1]
+            ]);
         }
     }
 }

@@ -15,6 +15,7 @@ class Appointment extends Model
         'disease_id',
         'doctor_time_id',
         'status',
+        'cancel_remark',
         'time',
         'note'
     ];

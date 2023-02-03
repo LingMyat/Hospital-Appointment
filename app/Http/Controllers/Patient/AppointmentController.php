@@ -13,8 +13,11 @@ class AppointmentController extends Controller
     //index
     public function index(Request $request)
     {
-       $appointments = Appointment::patientIn(patientAuth()->id)->with('patient','doctor','doctorTime')->get();
-       return view('Patient.page.Profile.appointment',compact('appointments'));
+        $appointments = Appointment::patientIn(patientAuth()->id)
+            ->with('patient', 'doctor', 'doctorTime')
+            ->orderBy('id', 'desc')
+            ->paginate(4);
+        return view('Patient.page.Profile.appointment', compact('appointments'));
     }
 
     //create
@@ -46,32 +49,43 @@ class AppointmentController extends Controller
         }
 
         $time = DoctorTime::findOrFail($request->doctor_time_id);
-        $appointment = Appointment::doctorIn($time->doctor->id)
+        $pending = Appointment::doctorIn($time->doctor->id)
             ->doctorTimeIn(
                 $time->id ?? $request->doctor_time_id
             )->patientIn(
                 patientAuth()->id
-            )->whereIn(
-                'status',
-                ['pending', 'success']
-            )
-            ->first();
+            )->where('status', 'pending')->first();
+
+        $success = Appointment::doctorIn($time->doctor->id)
+            ->doctorTimeIn(
+                $time->id ?? $request->doctor_time_id
+            )->patientIn(
+                patientAuth()->id
+            )->where('status', 'success')->first();
 
         // $appointment_time = $time->time_from;
 
         // if ($last_appointment_of_doctor) {
         //     $appointment_time = date('H:i', strtotime($last_appointment_of_doctor->time) + 1200);
         // }
-        if ($appointment) {
+        if ($pending) {
             return redirect()->back()->with('success', 'Your appointment is processing please wait for success!');
         }
-        Appointment::create([
-            'patient_id' => patientAuth()->id,
-            'doctor_id' => $time->doctor->id,
-            'doctor_time_id' => $time->id ?? $request->doctor_time_id,
-            'disease_id' => $request->disease,
-            'note' => $request->note,
-        ]);
-        return redirect()->back()->with('success', 'Your appointment is processing please wait for success!');
+        if ($success) {
+            return redirect()->back()->with('success', 'Your appointment is success check your appointments page!');
+        }
+        if (isAppointmentAvaliabe($time->doctor->id,$time->id ?? $request->doctor_time_id)) {
+            Appointment::create([
+                'patient_id' => patientAuth()->id,
+                'doctor_id' => $time->doctor->id,
+                'doctor_time_id' => $time->id ?? $request->doctor_time_id,
+                'disease_id' => $request->disease,
+                'note' => $request->note,
+            ]);
+            return redirect()->back()->with('success', 'Your appointment is processing please wait for success!');
+        }
+        return redirect()->back()->with('error', "This appointment section is full this section will restart next week or try another appointment section of Dr. {$time->doctor->name}!");
+
+
     }
 }

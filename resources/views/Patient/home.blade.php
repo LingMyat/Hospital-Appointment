@@ -9,7 +9,7 @@
                         <h1 class="display-1 text-white mb-md-4">Best Healthcare Solution In Your City</h1>
                         <div class="pt-2">
                             <a href="#find_doctor" class="btn btn-light rounded-pill py-md-3 px-md-5 mx-2">Find Doctor</a>
-                            <a href="" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Appointment</a>
+                            <a href="" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Your Appointments</a>
                         </div>
                     </div>
                 </div>

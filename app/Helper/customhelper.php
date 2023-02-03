@@ -1,10 +1,13 @@
 <?php
 
+use App\Models\Appointment;
 use App\Models\Doctor;
+use App\Models\DoctorTime;
 use App\Models\Patient;
 
-function getStatusBadge($value){
-    return $value==true? "<label class='badge badge-success'>Active</label>" : "<label class='badge badge-danger'>Inactive</label>";
+function getStatusBadge($value)
+{
+    return $value == true ? "<label class='badge badge-success'>Active</label>" : "<label class='badge badge-danger'>Inactive</label>";
 }
 
 function getAppointmentStatus($status)
@@ -52,13 +55,14 @@ function doctorInfo()
         $doctor->email,
         $doctor->phone,
     ];
-    if (in_array(NUll,$arr)) {
+    if (in_array(NUll, $arr)) {
         return false;
     }
     return true;
 }
 
-function patientAppointmentCheck() {
+function patientAppointmentCheck()
+{
     $patient = patientAuth();
     $arr = [
         $patient->phone,
@@ -66,10 +70,24 @@ function patientAppointmentCheck() {
         $patient->gender,
         $patient->date_of_birth,
     ];
-    if (in_array(NUll,$arr)) {
+    if (in_array(NUll, $arr)) {
         return false;
     }
     return true;
 }
 
-
+function isAppointmentAvaliabe($doctor_id, $doctor_time_id)
+{
+    $doctorTime = DoctorTime::findOrFail($doctor_time_id);
+    $last_appointment = Appointment::doctorIn($doctor_id)
+        ->doctorTimeIn($doctor_time_id)
+        ->where('status','success')
+        ->orderBy('id', 'desc')
+        ->first();
+    if ($last_appointment) {
+        if (strtotime($last_appointment->time)+1200>= strtotime($doctorTime->time_to)) {
+            return false;
+        }
+    }
+    return true;
+}

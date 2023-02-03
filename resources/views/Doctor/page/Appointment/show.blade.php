@@ -4,8 +4,8 @@
         h4 {
             margin: 15px 0;
         }
-        .badge
-        {
+
+        .badge {
             vertical-align: middle;
         }
     </style>
@@ -20,14 +20,25 @@
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    {{-- <button type="button" class="btn btn-inverse-primary btn-icon-text">
-                        <i class="mdi mdi-file-check btn-icon-prepend"></i> Edit status</button> --}}
-                        <div class="btn-group">
+                    <button type="button" id="edit_btn" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-url="{{ route('doctor.appointment.form', $appointment->id) }}"
+                        class="btn btn-inverse-primary btn-icon-text">
+                        <i class="mdi mdi-file-check btn-icon-prepend"></i> Status
+                    </button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content" id="modal-content">
+
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="btn-group">
                             <button type="button" class="btn btn-primary">Status</button>
                             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                               <span class="visually-hidden">Toggle Dropdown</span>
                             </button>
-                            @if ($appointment->status=='success')
+                            @if ($appointment->status == 'success')
                                 <ul class="dropdown-menu p-2">
                                     <small><b><i>Already Success</i></b></small>
                                 </ul>
@@ -44,7 +55,7 @@
                                     data-url="{{ route('doctor.appointment.update.cancel',$appointment->id) }}" id="cancel-btn" >Cancel</a></li>
                                 </ul>
                             @endif
-                        </div>
+                        </div> --}}
                 </li>
             </ul>
         </nav>
@@ -63,7 +74,17 @@
                                 $time_from = date('h:i A', strtotime($appointment->doctorTime->time_from));
                                 $time_to = date('h:i A', strtotime($appointment->doctorTime->time_to));
                             @endphp
-                            <h3>{{ "$time_from - $time_to / {$appointment->doctorTime->day->name}" }}  <span>{!! getAppointmentStatus($appointment->status) !!}</span></h3>
+                            <h3>
+                                @if ($appointment->time == null)
+                                    {{ "$time_from - $time_to / {$appointment->doctorTime->day->name}" }}
+                                @else
+                                    @php
+                                        $time = date('h:i A', strtotime($appointment->time));
+                                    @endphp
+                                    {{ "$time / {$appointment->doctorTime->day->name}" }}
+                                @endif
+                                <span>{!! getAppointmentStatus($appointment->status) !!}</span>
+                            </h3>
                             <h4>Name: {{ $appointment->patient->name }}</h4>
                             @php
                                 $age = date_diff(date_create($appointment->patient->date_of_birth), date_create('now'))->y;
@@ -86,29 +107,57 @@
 @endsection
 @section('script')
     <script>
-        $(document).ready(function () {
-            $('#success-btn').click(function (e) {
-                e.preventDefault();
-                $.ajax({
-                    type: "POST",
-                    url: $(this).data('url'),
-                    success: function (response) {
-                        if (response == 'success') {
-                            window.location.reload();
-                        }
-                    }
-                });
-            });
+        $(document).ready(function() {
+            // $('#success-btn').click(function(e) {
+            //     e.preventDefault();
+            //     $.ajax({
+            //         type: "POST",
+            //         url: $(this).data('url'),
+            //         success: function(response) {
+            //             if (response == 'success') {
+            //                 window.location.reload();
+            //             }
+            //         }
+            //     });
+            // });
 
-            $('#cancel-btn').click(function (e) {
+
+
+            $('#edit_btn').click(function(e) {
                 e.preventDefault();
                 $.ajax({
-                    type: "POST",
+                    type: "get",
                     url: $(this).data('url'),
-                    success: function (response) {
-                        if (response == 'success') {
-                            window.location.reload();
-                        }
+                    success: function(view) {
+                        $('#modal-content').html(view);
+                        $('#status_select').change(function(e) {
+                            e.preventDefault();
+
+                            var status = $(this).val();
+
+                            if (status == 'canceled') {
+                                $('#cancel_remark_div').show();
+                                $('#cancel_remark').prop('required', true);
+                            } else {
+                                $('#cancel_remark_div').hide();
+                                $('#cancel_remark').removeAttr('required');
+                            }
+                        });
+
+                        $('#cancel-btn').click(function(e) {
+                            e.preventDefault();
+                            console.log('click');
+                            $.ajax({
+                                type: "POST",
+                                url: $(this).data('url'),
+                                success: function(response) {
+                                    if (response == 'success') {
+                                        window.location.reload();
+                                    }
+                                }
+                            });
+                        })
+
                     }
                 });
             })

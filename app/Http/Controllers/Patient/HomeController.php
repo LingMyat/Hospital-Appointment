@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function doctors(Request $request)
     {
         $query = Doctor::active()->with('Specialities');
-        $doctors = $query->get();
+        $doctors = $query->paginate(6);
         if ($request->speciality) {
             $disease = Disease::where('slug',$request->speciality)->with('doctors','parent')->get()->first();
             $doctors = $disease->doctors;
@@ -38,7 +38,7 @@ class HomeController extends Controller
     //chats
     public function chats(Request $request)
     {
-        $rooms = Room::active()->get();
+        $rooms = Room::active()->paginate(6);
         return view('Patient.page.Chat.index',compact('rooms'));
     }
 

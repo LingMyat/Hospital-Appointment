@@ -48,7 +48,17 @@
                                             $time_from = date('h:i A', strtotime($appointment->doctorTime->time_from));
                                             $time_to = date('h:i A', strtotime($appointment->doctorTime->time_to));
                                         @endphp
-                                        <td>{{ "$time_from - $time_to" }}</td>
+                                        <td class="{{ $appointment->time == null?'':'ps-5' }}">
+                                            @if ($appointment->time == null)
+                                                {{ "$time_from - $time_to" }}
+                                            @else
+                                                @php
+                                                    $time = date('h:i A', strtotime($appointment->time));
+                                                @endphp
+                                                {{ "$time" }}
+                                            @endif
+
+                                        </td>
                                         <td>{{ $appointment->doctorTime->day->name }}</td>
                                         <td class="">
                                             {!! getAppointmentStatus($appointment->status) !!}
