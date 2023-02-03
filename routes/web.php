@@ -133,6 +133,7 @@ Route::controller(PatientHomeController::class)
         Route::get('/doctors', 'doctors')->name('patient.doctors');
         Route::get('/chats', 'chats')->name('patient.chat');
         Route::prefix('account')
+            ->middleware('patientAuth')
             ->group(function () {
                 Route::get('/profile','profile')->name('patient.account.profile');
             });
@@ -168,7 +169,7 @@ Route::controller(PatientChatController::class)
 Route::controller(PatientAppointmentController::class)
     ->prefix('appointments')
     ->group(function () {
-        Route::get('/','index')->name('patient.appointment');
+        Route::get('/','index')->name('patient.appointment')->middleware('patientAuth');
         Route::get('/{id}/form', 'create')->name('patient.appointment.form');
         Route::post('/', 'store')->name('patient.appointment.store');
     });

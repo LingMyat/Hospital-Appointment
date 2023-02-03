@@ -1,4 +1,13 @@
 @extends('Patient.Layout.Template.master')
+@section('css')
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+@endsection
 @section('section')
     <!-- About Start -->
     <div class="container-fluid py-5" id="find_doctor">
@@ -33,26 +42,26 @@
                                     <select name="nrc_code" class="w-100 niceSelect" id="nrc_code_select">
                                         <option value="">no</option>
                                         @foreach ($nrc_codes as $nrc_code)
-                                            <option
-                                            data-url="{{ route('patient.nrc.names',$nrc_code) }}"
-                                            value="{{ $nrc_code }}"
-                                            @if (patientAuth()->nrc)
-                                                {{ $nrc_code == patientAuth()->nrc->nrc_code?'selected':'' }}
-                                            @endif
-                                            >{{ $nrc_code }}</option>
+                                            <option data-url="{{ route('patient.nrc.names', $nrc_code) }}"
+                                                value="{{ $nrc_code }}"
+                                                @if (patientAuth()->nrc) {{ $nrc_code == patientAuth()->nrc->nrc_code ? 'selected' : '' }} @endif>
+                                                {{ $nrc_code }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-5" id="nrc_name_container">
                                     <select class="w-100 niceSelect" name="" id="" disabled>
-                                        <option value="{{ patientAuth()->nrc->name_mm??'' }}">{{ patientAuth()->nrc->name_mm??'nrc-name' }}</option>
+                                        <option value="{{ patientAuth()->nrc->name_mm ?? '' }}">
+                                            {{ patientAuth()->nrc->name_mm ?? 'nrc-name' }}</option>
                                     </select>
                                 </div>
                                 <div class="col-2" id="">
-                                    <input type="text" name="mid_txt" class="form-control ps-xl-3  ps-md-2 ps-sm-3" value='နိုင်'>
+                                    <input type="text" name="mid_txt" class="form-control ps-xl-3  ps-md-2 ps-sm-3"
+                                        value='နိုင်'>
                                 </div>
                                 <div class="col-3" id="">
-                                    <input type="text" name="nrc_number" placeholder="" value="{{ patientAuth()->NRC }}" class="form-control">
+                                    <input type="number" name="nrc_number" placeholder="" value="{{ patientAuth()->NRC }}"
+                                        class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -63,7 +72,7 @@
                         </div>
                         <div class="">
                             <label class="form-label mb-1" for="">Phone</label>
-                            <input type="text" class="form-control mb-2" name="phone"
+                            <input type="number" class="form-control mb-2" name="phone"
                                 value="{{ patientAuth()->phone }}">
                         </div>
                         <div class="">
@@ -79,8 +88,10 @@
                         <div class="">
                             <label class="form-label mb-1" for="">Gender</label>
                             <select class="w-100 mb-3 niceSelect" name="gender" id="">
-                                <option value="Male" {{ patientAuth()->gender == 'Male' ? 'selected' : '' }}>Male</option>
-                                <option value="Female" {{ patientAuth()->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                                <option value="Male" {{ patientAuth()->gender == 'Male' ? 'selected' : '' }}>Male
+                                </option>
+                                <option value="Female" {{ patientAuth()->gender == 'Female' ? 'selected' : '' }}>Female
+                                </option>
                             </select>
                         </div>
                         <div class="">
@@ -100,13 +111,13 @@
             $('#date').removeAttr('readonly');
             $('.niceSelect').niceSelect();
 
-            $('#nrc_code_select').change(function (e) {
+            $('#nrc_code_select').change(function(e) {
                 e.preventDefault();
 
                 $.ajax({
                     type: "POST",
                     url: $(this).children("option:selected").data('url'),
-                    success: function (view) {
+                    success: function(view) {
                         $('#nrc_name_container').html(view);
                     }
                 });
