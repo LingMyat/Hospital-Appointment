@@ -55,4 +55,10 @@ class HomeController extends Controller
         $nrc_names = Nrc::where('nrc_code',$nrc_code)->get()->pluck('name_mm');
         return view('Patient.Layout.Template.share.modal.nrc-name',compact('nrc_names'));
     }
+
+    //about
+    public function about(Request $request)
+    {
+        return view('Patient.page.about-us');
+    }
 }

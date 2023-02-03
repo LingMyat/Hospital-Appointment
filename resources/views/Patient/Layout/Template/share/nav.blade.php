@@ -13,7 +13,7 @@
                     <a href="{{ route('HOME') }}" class="nav-item nav-link {{Request::segment(1) == 'home'?'active':'' }}">Home</a>
                     <a href="{{ route('patient.doctors') }}" class="nav-item nav-link {{Request::segment(1) == 'doctors'?'active':'' }}">Doctors</a>
                     <a href="{{ route('patient.chat') }}" class="nav-item nav-link {{Request::segment(1) == 'chats'?'active':'' }}">Chats</a>
-                    <a href="service.html" class="nav-item nav-link">About</a>
+                    <a href="{{ route('patient.about') }}" class="nav-item nav-link {{Request::segment(1) == 'abouts'?'active':'' }}">About</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle {{Request::segment(1) == 'account'?'active':'' }}" data-bs-toggle="dropdown">Account</a>
                         <div class="dropdown-menu m-0">

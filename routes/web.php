@@ -137,6 +137,7 @@ Route::controller(PatientHomeController::class)
                 Route::get('/profile','profile')->name('patient.account.profile');
             });
         Route::post('/{nrc_code}/nrc-name','nrcName')->name('patient.nrc.names');
+        Route::get('/abouts','about')->name('patient.about');
     });
 
 Route::controller(PatientDoctorController::class)
