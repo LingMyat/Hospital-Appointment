@@ -94,6 +94,12 @@
                                 },
                             });
                         })
+
+                        $('#modal-close-btn').click(function (e) {
+                            e.preventDefault();
+                            $('#modal-content').html('');
+                            $('#appointment_form_modal').html('');
+                        });
                     }
                 });
             });
