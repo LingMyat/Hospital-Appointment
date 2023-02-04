@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\v1\Patient\AuthController as ApiV1PatientAuthController;
+use App\Http\Controllers\Api\v1\DiseaseContrller;
+use App\Http\Resources\PatientProfileResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,5 +18,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return new PatientProfileResource($request->user());
 });
+
+
+Route::controller(ApiV1PatientAuthController::class)
+    ->prefix('v1/patient/auth')
+    ->group(function () {
+        Route::post('/login', 'login');
+        Route::post('/register', 'register');
+        Route::get('/logout', 'logout')->middleware('auth:sanctum');
+    });
+
+Route::prefix('v1/patient')
+    ->middleware('auth:sanctum')
+    ->group(function () {
+        Route::controller(DiseaseContrller::class)
+            ->group(function () {
+                Route::get('main-diagnosis', 'mainDisease');
+                Route::get('sub-diagnosis', 'subDisease');
+            });
+    });
