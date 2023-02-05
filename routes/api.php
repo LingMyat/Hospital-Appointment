@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\v1\Patient\AuthController as ApiV1PatientAuthController;
 use App\Http\Controllers\Api\v1\DiseaseContrller;
+use App\Http\Controllers\Api\v1\DoctorController;
 use App\Http\Resources\PatientProfileResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,5 +38,10 @@ Route::prefix('v1/patient')
             ->group(function () {
                 Route::get('main-diagnosis', 'mainDisease');
                 Route::get('sub-diagnosis', 'subDisease');
+            });
+
+        Route::controller(DoctorController::class)
+            ->group(function () {
+                Route::get('doctors', 'doctors');
             });
     });
