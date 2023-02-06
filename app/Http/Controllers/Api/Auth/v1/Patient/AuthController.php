@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Api\Auth\v1\Patient;
 
-use App\Helper\ResponseHelper;
+use App\Models\Nrc;
 use App\Models\Patient;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\PatientProfileResource;
 use App\Traits\MakeSlug;
+use Illuminate\Http\Request;
+use App\Helper\ResponseHelper;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\PatientProfileResource;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     use MakeSlug;
-    //login
+
     public function login(Request $request)
     {
         $rules = [
@@ -91,8 +92,33 @@ class AuthController extends Controller
         return ResponseHelper::success();
     }
 
-    public function store(Request $request)
+    public function update(Request $request)
     {
-
+        $request->validate([
+            'name'=>'required|max:255',
+            'email'=>'required|email',
+            'phone'=>'required',
+            'address'=>'required',
+            'date_of_birth'=>'required',
+            'image'=>'mimes:png,jpg,jpeg',
+            'nrc_code'=>'required',
+            'name_mm'=>'required',
+            'nrc_number'=>'required|max:6'
+        ]);
+        $requestData = $request->all();
+        if($request->hasFile('image')){
+            $path = Patient::UPLOAD_PATH."/" . date("Y") . "/" . date("m") . "/";
+            $fileName = uniqid().time().'.'.$request->image->extension();
+            $request->image->move(public_path($path), $fileName);
+            $requestData['image'] = $path . $fileName;
+        }
+        $nrc = Nrc::where([
+            'nrc_code'=>$request->nrc_code,
+            'name_mm'=>$request->name_mm
+        ])->first();
+        $requestData['NRC'] = $request->nrc_number;
+        $requestData['nrc_id'] = $nrc->id;
+        Patient::findOrFail($request->user()->id)->update($requestData);
+        return response()->json('Updated Successful!',200);
     }
 }

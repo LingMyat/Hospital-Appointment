@@ -23,4 +23,16 @@ class AppointmentController extends Controller
         }
         return ResponseHelper::success(PatientAppointmentResource::collection($appointments));
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'phone' => 'required',
+            'address' => 'required',
+            'date_of_birth' => 'required',
+            'gender' => 'required',
+            'disease' => 'required'
+        ]);
+    }
 }

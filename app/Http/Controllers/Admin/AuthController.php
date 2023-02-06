@@ -10,13 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    //Login
     public function loginPage(Request $request)
     {
         return view('Admin.auth.login');
     }
 
-    //login
     public function login(Request $request)
     {
         $request->validate([
@@ -35,7 +33,6 @@ class AuthController extends Controller
         return to_route('admin.dashboard')->with('success','Successfully Logged In');
     }
 
-    //logout
     public function logout(Request $request)
     {
         Auth::logout(auth()->user());

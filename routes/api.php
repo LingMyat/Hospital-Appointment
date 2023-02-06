@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\v1\Patient\AuthController as ApiPatientAuthController;
 use App\Http\Controllers\Api\v1\DiseaseContrller;
 use App\Http\Controllers\Api\v1\DoctorController;
+use App\Http\Controllers\Api\v1\NrcController;
 use App\Http\Controllers\Api\v1\Patient\AppointmentController as ApiPatientAppointmentController;
 use App\Http\Resources\PatientProfileResource;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/profile', function (Request $request) {
     return new PatientProfileResource($request->user());
 });
 
@@ -32,7 +33,7 @@ Route::controller(ApiPatientAuthController::class)
         Route::middleware('auth:sanctum')
             ->group(function () {
                 Route::get('/logout', 'logout');
-                Route::patch('/update','update');
+                Route::post('/update','update');
             });
     });
 
@@ -55,5 +56,12 @@ Route::prefix('v1/patient')
             ->group(function () {
                 Route::get('/', 'index');
                 Route::post('/store', 'store');
+            });
+
+        Route::controller(NrcController::class)
+            ->prefix('nrc')
+            ->group(function () {
+                Route::get('/code','nrcCode');
+                Route::get('/{nrc_code}/name','nrcNameMm');
             });
     });
