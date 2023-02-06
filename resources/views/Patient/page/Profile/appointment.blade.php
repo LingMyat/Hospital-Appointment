@@ -62,6 +62,10 @@
                         </div>
                     </div>
                 @endforeach
+
+                <div class="">
+                    {{ $appointments->links() }}
+                </div>
             </div>
         </div>
     </div>

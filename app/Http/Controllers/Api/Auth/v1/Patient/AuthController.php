@@ -88,6 +88,11 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-        return ResponseHelper::success('success');
+        return ResponseHelper::success();
+    }
+
+    public function store(Request $request)
+    {
+
     }
 }

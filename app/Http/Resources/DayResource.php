@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DoctorTimeResource extends JsonResource
+class DayResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,15 +14,9 @@ class DoctorTimeResource extends JsonResource
      */
     public function toArray($request)
     {
-
-        $time_from = date('h:i A', strtotime($this->time_from));
-        $time_to = date('h:i A', strtotime($this->time_to));
-
         return [
-            'id' => $this->id,
-            'time' => "$time_from - $time_to",
-            'day' => $this->day->name,
-            'day_mm' => $this->day->name_mm
+            'name' => $this->name,
+            'name_mm' => $this->name_mm
         ];
     }
 }

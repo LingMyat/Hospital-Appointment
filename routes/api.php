@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\v1\Patient\AuthController as ApiV1PatientAuthController;
+use App\Http\Controllers\Api\Auth\v1\Patient\AuthController as ApiPatientAuthController;
 use App\Http\Controllers\Api\v1\DiseaseContrller;
 use App\Http\Controllers\Api\v1\DoctorController;
+use App\Http\Controllers\Api\v1\Patient\AppointmentController as ApiPatientAppointmentController;
 use App\Http\Resources\PatientProfileResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,12 +24,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::controller(ApiV1PatientAuthController::class)
+Route::controller(ApiPatientAuthController::class)
     ->prefix('v1/patient/auth')
     ->group(function () {
         Route::post('/login', 'login');
         Route::post('/register', 'register');
-        Route::get('/logout', 'logout')->middleware('auth:sanctum');
+        Route::middleware('auth:sanctum')
+            ->group(function () {
+                Route::get('/logout', 'logout');
+                Route::patch('/update','update');
+            });
     });
 
 Route::prefix('v1/patient')
@@ -43,5 +48,12 @@ Route::prefix('v1/patient')
         Route::controller(DoctorController::class)
             ->group(function () {
                 Route::get('doctors', 'doctors');
+            });
+
+        Route::controller(ApiPatientAppointmentController::class)
+            ->prefix('appointments')
+            ->group(function () {
+                Route::get('/', 'index');
+                Route::post('/store', 'store');
             });
     });

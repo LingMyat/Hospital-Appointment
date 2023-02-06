@@ -60,4 +60,8 @@ class Patient extends Authenticatable
         return $this->belongsTo(Nrc::class,'nrc_id','id');
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }
