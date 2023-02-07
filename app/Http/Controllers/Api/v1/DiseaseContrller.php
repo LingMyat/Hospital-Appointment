@@ -14,17 +14,18 @@ class DiseaseContrller extends Controller
     //mainDisease
     public function mainDisease(Request $request)
     {
-
-        $diseases = Disease::publish()
+        $query = Disease::publish()
             ->onlyParent()
             ->with('media', 'children')
-            ->active()
-            ->get();
-
+            ->active();
+        if($request->search)
+        {
+            $query->where('name','like',"%$request->search%");
+        }
+        $diseases = $query->get();
         if ($request->id) {
             return ResponseHelper::success(new MainDiseaseResource(Disease::findOrFail($request->id)));
         }
-
         return ResponseHelper::success(MainDiseaseResource::collection($diseases));
     }
 
@@ -37,8 +38,7 @@ class DiseaseContrller extends Controller
             ->with('media', 'parent')
             ->get();
 
-        if ($request->id)
-        {
+        if ($request->id) {
             return ResponseHelper::success(new SubDiseaseResource(Disease::findOrFail($request->id)));
         }
         return ResponseHelper::success(SubDiseaseResource::collection($diseases));

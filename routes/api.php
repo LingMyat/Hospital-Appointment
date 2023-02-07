@@ -61,6 +61,7 @@ Route::prefix('v1/patient')
         Route::controller(NrcController::class)
             ->prefix('nrc')
             ->group(function () {
+                Route::get('/','index');
                 Route::get('/code','nrcCode');
                 Route::get('/{nrc_code}/name','nrcNameMm');
             });

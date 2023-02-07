@@ -15,6 +15,10 @@ class DoctorController extends Controller
     public function doctors(Request $request)
     {
         $query = Doctor::active()->with('Specialities');
+        if($request->search)
+        {
+            $query->where('name','like',"%$request->search%");
+        }
         $doctors = $query->get();
         if ($request->diagnosis_id) {
             $disease = Disease::where('id',$request->diagnosis_id)->with('doctors','parent')->get()->first();
