@@ -53,9 +53,10 @@ Route::prefix('v1/patient')
 
         Route::controller(ApiPatientAppointmentController::class)
             ->prefix('appointments')
+            ->middleware('auth:sanctum')
             ->group(function () {
                 Route::get('/', 'index');
-                Route::post('/store', 'store')->middleware('auth:sanctum');
+                Route::post('/store', 'store');
             });
 
         Route::controller(NrcController::class)

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RoomMessageResource extends JsonResource
+class ChildMessageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,6 @@ class RoomMessageResource extends JsonResource
         return [
             'id'=>$this->id,
             'message'=>$this->message,
-            'sender' => $this->sender_role=='doctor'?new RoomMessageSenderResource($this->doctor):new RoomMessageSenderResource($this->patient),
-            'child_messages'=>ChildMessageResource::collection($this->childs),
-            'image'=>$this->media->image??Null
         ];
     }
 }
