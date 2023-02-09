@@ -87,9 +87,9 @@ Route::controller(ApiDoctorAuthController::class)
     ->group(function () {
         Route::post('/login', 'login');
         Route::post('/register', 'register');
-        // Route::middleware('auth:sanctum')
-        //     ->group(function () {
-        //         Route::delete('/logout', 'logout');
-        //         Route::post('/update', 'update');
-        //     });
+        Route::middleware('auth:sanctum')
+            ->group(function () {
+                Route::delete('/logout', 'logout');
+                // Route::post('/update', 'update');
+            });
     });

@@ -83,4 +83,10 @@ class AuthController extends Controller
             return $th->getMessage();
         }
     }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return ResponseHelper::success();
+    }
 }
