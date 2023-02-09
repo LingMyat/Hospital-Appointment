@@ -35,12 +35,12 @@
             @csrf
             <div class="form-group first">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" name="name" id="username">
+                <input type="text" class="form-control" id="name_input" name="name" value="{{ old('name') }}" id="username">
             </div>
 
             <div class="form-group">
                 <label for="email">Email or Phone</label>
-                <input type="text" class="form-control" name="email_or_phone" id="email">
+                <input type="text" class="form-control" id="email_or_phone_input" value="{{ old('email_or_phone') }}" name="email_or_phone" id="email">
             </div>
 
             {{-- <div class="form-group form-select field--not-empty">

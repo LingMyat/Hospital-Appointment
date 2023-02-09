@@ -90,6 +90,6 @@ Route::controller(ApiDoctorAuthController::class)
         Route::middleware('auth:sanctum')
             ->group(function () {
                 Route::delete('/logout', 'logout');
-                // Route::post('/update', 'update');
+                Route::post('/update', 'update');
             });
     });

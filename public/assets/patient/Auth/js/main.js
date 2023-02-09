@@ -10,4 +10,13 @@ $(function() {
 	  }
 	});
 
+    let arr = [$('#name_input'),$('#email_or_phone_input')]
+
+    arr.forEach(element => {
+        if (element.val()!= "") {
+            var $field = element.closest('.form-group');
+            $field.addClass('field--not-empty');
+        }
+    });
+
 });

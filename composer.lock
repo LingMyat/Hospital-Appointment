@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b35180259505af5d31d522d76306ddf1",
+    "content-hash": "509f98c916b8ff82945f827dd887c1a7",
     "packages": [
         {
             "name": "brick/math",
@@ -61,6 +61,43 @@
                 }
             ],
             "time": "2022-08-10T22:54:19+00:00"
+        },
+        {
+            "name": "cyberwings/myanmar-phone-number-php",
+            "version": "0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/johnreginald/myanmar-phone-number-php.git",
+                "reference": "c86d5894b416ef78a22c0bd171aefd5ee7b96589"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/johnreginald/myanmar-phone-number-php/zipball/c86d5894b416ef78a22c0bd171aefd5ee7b96589",
+                "reference": "c86d5894b416ef78a22c0bd171aefd5ee7b96589",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CyberWings\\": "src/CyberWings/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Htet Wai Yan Soe",
+                    "email": "johnthelinux@gmail.com"
+                }
+            ],
+            "description": "PHP port of ( https://github.com/Melomap/mm_phonenumber ) to check valid myanmar mobile numbers, get mobile operator's name, sanitize mobile numbers and get mobile network types.",
+            "support": {
+                "issues": "https://github.com/johnreginald/myanmar-phone-number-php/issues",
+                "source": "https://github.com/johnreginald/myanmar-phone-number-php/tree/master"
+            },
+            "time": "2018-09-01T14:59:26+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

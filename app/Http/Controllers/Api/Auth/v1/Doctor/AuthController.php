@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Api\Auth\v1\Doctor;
 
 use App\Models\Doctor;
+use App\Traits\MakeSlug;
 use Illuminate\Http\Request;
 use App\Helper\ResponseHelper;
+use App\Models\DoctorProfession;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\DoctorResource;
-use App\Traits\MakeSlug;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\DoctorResource;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -88,5 +89,39 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
         return ResponseHelper::success();
+    }
+
+    public function update(Request $request)
+    {
+        $data = [
+            'name' => $request->name??$request->user()->name,
+            'slug' => $this->makeSlug($request->name, 'doctors'),
+            'email' => $request->email??$request->user()->email,
+            'phone' => $request->phone??$request->user()->phone,
+            'degree' => $request->degree??$request->user()->degree,
+            'SAMA' => $request->SAMA??$request->user()->SAMA,
+            'biography' => $request->biography??$request->user()->biography
+        ];
+
+        if ($request->hasFile('image')) {
+            $path = Doctor::UPLOAD_PATH . date('Y') . '/' . date('m') . "/";
+            $fileName = uniqid() . time() . '.' . $request->file('image')->extension();
+            $request->file('image')->move(public_path($path), $fileName);
+            $data['image'] = ($path . $fileName);
+        }
+
+        Doctor::findOrFail($request->user()->id)->update($data);
+
+        if ($request->professions) {
+            DoctorProfession::where('doctor_id', $request->user()->id)->delete();
+            foreach ($request->professions as $key => $disease_id) {
+                DoctorProfession::create([
+                    'doctor_id' => $request->user()->id,
+                    'disease_id' => $disease_id
+                ]);
+            }
+        }
+
+        return response()->json('Updated Successful!',200);
     }
 }

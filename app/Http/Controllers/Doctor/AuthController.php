@@ -7,6 +7,7 @@ use App\Helper\DoctorAuth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\DoctorProfession;
+use App\Rules\MmPhoneNumberRule;
 use App\Traits\MakeSlug;
 use Illuminate\Support\Facades\Hash;
 
@@ -65,7 +66,7 @@ class AuthController extends Controller
             $email = $request->email_or_phone;
             $phone = Null;
         } else {
-            $rules['email_or_phone'] = 'required|unique:doctors,phone';
+            $rules['email_or_phone'] = ['required', new MmPhoneNumberRule(), 'unique:doctors,phone'];
             $phone = $request->email_or_phone;
             $email = Null;
         }
