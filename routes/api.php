@@ -58,20 +58,22 @@ Route::controller(RoomController::class)
             });
     });
 
-Route::controller(ApiPatientAuthController::class)
-    ->prefix('v1/patient/auth')
-    ->group(function () {
-        Route::post('/login', 'login');
-        Route::post('/register', 'register');
-        Route::middleware('auth:sanctum')
-            ->group(function () {
-                Route::delete('/logout', 'logout');
-                Route::post('/update', 'update');
-            });
-    });
+
 
 Route::prefix('v1/patient')
     ->group(function () {
+
+        Route::controller(ApiPatientAuthController::class)
+            ->prefix('/auth')
+            ->group(function () {
+                Route::post('/login', 'login');
+                Route::post('/register', 'register');
+                Route::middleware('auth:sanctum')
+                    ->group(function () {
+                        Route::delete('/logout', 'logout');
+                        Route::post('/update', 'update');
+                    });
+            });
 
         Route::controller(DoctorController::class)
             ->group(function () {
@@ -95,33 +97,35 @@ Route::prefix('v1/patient')
             });
     });
 
-
-Route::controller(ApiDoctorAuthController::class)
-    ->prefix('v1/doctor/auth')
+Route::prefix('v1/doctor')
     ->group(function () {
-        Route::post('/login', 'login');
-        Route::post('/register', 'register');
+
+        Route::controller(ApiDoctorAuthController::class)
+            ->prefix('/auth')
+            ->group(function () {
+                Route::post('/login', 'login');
+                Route::post('/register', 'register');
+                Route::middleware('auth:sanctum')
+                    ->group(function () {
+                        Route::delete('/logout', 'logout');
+                        Route::patch('/update', 'update');
+                    });
+            });
+
         Route::middleware('auth:sanctum')
             ->group(function () {
-                Route::delete('/logout', 'logout');
-                Route::patch('/update', 'update');
-            });
-    });
-
-Route::prefix('v1/doctor')
-    ->middleware('auth:sanctum')
-    ->group(function () {
-        Route::controller(DoctorTimeController::class)
-            ->prefix('/doctor-time')
-            ->group(function () {
-                Route::post('/', 'store');
-                Route::patch('/{id}', 'update');
-                Route::delete('/{id}', 'destroy');
-            });
-        Route::controller(AppointmentController::class)
-            ->prefix('appointments')
-            ->group(function () {
-                Route::get('/', 'index');
-                Route::patch('/{id}', 'update');
+                Route::controller(DoctorTimeController::class)
+                    ->prefix('/doctor-time')
+                    ->group(function () {
+                        Route::post('/', 'store');
+                        Route::patch('/{id}', 'update');
+                        Route::delete('/{id}', 'destroy');
+                    });
+                Route::controller(AppointmentController::class)
+                    ->prefix('appointments')
+                    ->group(function () {
+                        Route::get('/', 'index');
+                        Route::patch('/{id}', 'update');
+                    });
             });
     });
