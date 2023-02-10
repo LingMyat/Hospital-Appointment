@@ -1,16 +1,19 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\v1\Doctor\AuthController as ApiDoctorAuthController;
-use App\Http\Controllers\Api\Auth\v1\Patient\AuthController as ApiPatientAuthController;
+use App\Models\Day;
+use Illuminate\Http\Request;
+use App\Helper\ResponseHelper;
+use Illuminate\Support\Facades\Route;
+use App\Http\Resources\DoctorResource;
+use App\Http\Controllers\Api\v1\NrcController;
+use App\Http\Resources\PatientProfileResource;
 use App\Http\Controllers\Api\v1\DiseaseContrller;
 use App\Http\Controllers\Api\v1\DoctorController;
-use App\Http\Controllers\Api\v1\NrcController;
-use App\Http\Controllers\Api\v1\Patient\AppointmentController as ApiPatientAppointmentController;
 use App\Http\Controllers\Api\v1\Patient\RoomController as ApiPatientRomController;
-use App\Http\Resources\DoctorResource;
-use App\Http\Resources\PatientProfileResource;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Auth\v1\Doctor\AuthController as ApiDoctorAuthController;
+use App\Http\Controllers\Api\Auth\v1\Patient\AuthController as ApiPatientAuthController;
+use App\Http\Controllers\Api\v1\Doctor\DoctorTimeController;
+use App\Http\Controllers\Api\v1\Patient\AppointmentController as ApiPatientAppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +27,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/profile', function (Request $request) {
-    if($request->user()->role=='doctor'){
+    if ($request->user()->role == 'doctor') {
         return new DoctorResource($request->user());
     }
     return new PatientProfileResource($request->user());
 });
 
+Route::get('/days', function () {
+    $day = Day::all();
+    return ResponseHelper::success($day);
+});
+
+Route::controller(DiseaseContrller::class)
+    ->prefix('v1')
+    ->group(function () {
+        Route::get('main-diagnosis', 'mainDisease');
+        Route::get('sub-diagnosis', 'subDisease');
+    });
 
 Route::controller(ApiPatientAuthController::class)
     ->prefix('v1/patient/auth')
@@ -45,11 +59,6 @@ Route::controller(ApiPatientAuthController::class)
 
 Route::prefix('v1/patient')
     ->group(function () {
-        Route::controller(DiseaseContrller::class)
-            ->group(function () {
-                Route::get('main-diagnosis', 'mainDisease');
-                Route::get('sub-diagnosis', 'subDisease');
-            });
 
         Route::controller(DoctorController::class)
             ->group(function () {
@@ -91,5 +100,15 @@ Route::controller(ApiDoctorAuthController::class)
             ->group(function () {
                 Route::delete('/logout', 'logout');
                 Route::post('/update', 'update');
+            });
+    });
+
+Route::prefix('v1/doctor')
+    ->group(function () {
+        Route::controller(DoctorTimeController::class)
+            ->middleware('auth:sanctum')
+            ->group(function () {
+                Route::post('/doctor-time', 'store');
+                // Route::patch('/doctor-time','update');
             });
     });

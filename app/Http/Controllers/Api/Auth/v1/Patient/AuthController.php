@@ -10,6 +10,7 @@ use App\Helper\ResponseHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\PatientProfileResource;
+use App\Rules\MmPhoneNumberRule;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -96,8 +97,12 @@ class AuthController extends Controller
     {
         $request->validate([
             'name'=>'required|max:255',
-            'email'=>'required|email',
-            'phone'=>'required',
+            'email'=>"required|email|unique:patients,email,except,{$request->user()->id}",
+            'phone'=>[
+                "required",
+                "unique:patients,phone,except,{$request->user()->id}",
+                new MmPhoneNumberRule()
+            ],
             'address'=>'required',
             'date_of_birth'=>'required',
             'image'=>'mimes:png,jpg,jpeg',

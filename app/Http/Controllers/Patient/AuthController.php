@@ -95,10 +95,15 @@ class AuthController extends Controller
     //updateProfile
     public function updateProfile(Request $request)
     {
+        $id = patientAuth()->id;
         $request->validate([
             'name' => 'required|max:255',
-            'email' => 'required|email',
-            'phone' => 'required',
+            'email' => "required|email|unique:patients,email,except,$id",
+            'phone' => [
+                "required",
+                "unique:patients,phone,except,$id",
+                new MmPhoneNumberRule()
+            ],
             'address' => 'required',
             'date_of_birth' => 'required',
             'image' => 'mimes:png,jpg,jpeg'

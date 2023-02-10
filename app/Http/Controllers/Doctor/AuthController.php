@@ -93,6 +93,21 @@ class AuthController extends Controller
     //profile update
     public function update(Request $request)
     {
+        $id = doctorAuth()->id;
+        if ($request->email) {
+            $request->validate([
+                'email' => "required|unique:doctors,email,except,$id"
+            ]);
+        }
+        if ($request->phone) {
+            $request->validate([
+                'phone' => [
+                    'required',
+                    "unique:doctors,phone,except,$id",
+                    new MmPhoneNumberRule()
+                ]
+            ]);
+        }
         $data = [
             'name' => $request->name,
             'slug' => $this->makeSlug($request->name, 'doctors'),

@@ -9,6 +9,11 @@ class Day extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     public function doctorTimes()
     {
         return $this->hasMany(DoctorTime::class);
