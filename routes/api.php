@@ -9,12 +9,12 @@ use App\Http\Controllers\Api\v1\NrcController;
 use App\Http\Resources\PatientProfileResource;
 use App\Http\Controllers\Api\v1\DiseaseContrller;
 use App\Http\Controllers\Api\v1\DoctorController;
-use App\Http\Controllers\Api\v1\Patient\RoomController as ApiPatientRomController;
 use App\Http\Controllers\Api\Auth\v1\Doctor\AuthController as ApiDoctorAuthController;
 use App\Http\Controllers\Api\Auth\v1\Patient\AuthController as ApiPatientAuthController;
 use App\Http\Controllers\Api\V1\Doctor\AppointmentController;
 use App\Http\Controllers\Api\v1\Doctor\DoctorTimeController;
 use App\Http\Controllers\Api\v1\Patient\AppointmentController as ApiPatientAppointmentController;
+use App\Http\Controllers\Api\v1\RoomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +44,18 @@ Route::controller(DiseaseContrller::class)
     ->group(function () {
         Route::get('main-diagnosis', 'mainDisease');
         Route::get('sub-diagnosis', 'subDisease');
+    });
+
+Route::controller(RoomController::class)
+    ->prefix('v1/rooms')
+    ->group(function () {
+        Route::get('/', 'index');
+        Route::middleware('auth:sanctum')
+            ->group(function () {
+                Route::get('{id}/room-messages', 'roomMessages');
+                Route::post('store-room-message', 'storeRoomMessage');
+                Route::post('store-chat-image', 'storeChatImage');
+            });
     });
 
 Route::controller(ApiPatientAuthController::class)
@@ -81,14 +93,6 @@ Route::prefix('v1/patient')
                 Route::get('/code', 'nrcCode');
                 Route::get('/{nrc_code}/name', 'nrcNameMm');
             });
-        Route::controller(ApiPatientRomController::class)
-            ->prefix('rooms')
-            ->group(function () {
-                Route::get('/', 'index');
-                Route::get('{id}/room-messages', 'roomMessages')->middleware('auth:sanctum');
-                Route::post('store-room-message', 'storeRoomMessage')->middleware('auth:sanctum');
-                Route::post('store-chat-image', 'storeChatImage')->middleware('auth:sanctum');
-            });
     });
 
 
@@ -117,7 +121,7 @@ Route::prefix('v1/doctor')
         Route::controller(AppointmentController::class)
             ->prefix('appointments')
             ->group(function () {
-                Route::get('/','index');
-                Route::patch('/{id}','update');
+                Route::get('/', 'index');
+                Route::patch('/{id}', 'update');
             });
     });

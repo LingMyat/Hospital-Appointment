@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\Patient;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Room;
 use App\Models\Media;
