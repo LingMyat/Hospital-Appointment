@@ -97,10 +97,10 @@ class AuthController extends Controller
     {
         $request->validate([
             'name'=>'required|max:255',
-            'email'=>"required|email|unique:patients,email,except,{$request->user()->id}",
+            'email'=>"required|email|unique:patients,email,{$request->user()->id}",
             'phone'=>[
                 "required",
-                "unique:patients,phone,except,{$request->user()->id}",
+                "unique:patients,phone,{$request->user()->id}",
                 new MmPhoneNumberRule()
             ],
             'address'=>'required',

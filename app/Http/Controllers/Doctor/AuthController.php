@@ -96,14 +96,14 @@ class AuthController extends Controller
         $id = doctorAuth()->id;
         if ($request->email) {
             $request->validate([
-                'email' => "required|unique:doctors,email,except,$id"
+                'email' => "required|unique:doctors,email,$id"
             ]);
         }
         if ($request->phone) {
             $request->validate([
                 'phone' => [
                     'required',
-                    "unique:doctors,phone,except,$id",
+                    "unique:doctors,phone,$id",
                     new MmPhoneNumberRule()
                 ]
             ]);

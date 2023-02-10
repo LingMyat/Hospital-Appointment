@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\v1\DoctorController;
 use App\Http\Controllers\Api\v1\Patient\RoomController as ApiPatientRomController;
 use App\Http\Controllers\Api\Auth\v1\Doctor\AuthController as ApiDoctorAuthController;
 use App\Http\Controllers\Api\Auth\v1\Patient\AuthController as ApiPatientAuthController;
+use App\Http\Controllers\Api\V1\Doctor\AppointmentController;
 use App\Http\Controllers\Api\v1\Doctor\DoctorTimeController;
 use App\Http\Controllers\Api\v1\Patient\AppointmentController as ApiPatientAppointmentController;
 
@@ -99,16 +100,24 @@ Route::controller(ApiDoctorAuthController::class)
         Route::middleware('auth:sanctum')
             ->group(function () {
                 Route::delete('/logout', 'logout');
-                Route::post('/update', 'update');
+                Route::patch('/update', 'update');
             });
     });
 
 Route::prefix('v1/doctor')
+    ->middleware('auth:sanctum')
     ->group(function () {
         Route::controller(DoctorTimeController::class)
-            ->middleware('auth:sanctum')
+            ->prefix('/doctor-time')
             ->group(function () {
-                Route::post('/doctor-time', 'store');
-                // Route::patch('/doctor-time','update');
+                Route::post('/', 'store');
+                Route::patch('/{id}', 'update');
+                Route::delete('/{id}', 'destroy');
+            });
+        Route::controller(AppointmentController::class)
+            ->prefix('appointments')
+            ->group(function () {
+                Route::get('/','index');
+                Route::patch('/{id}','update');
             });
     });
