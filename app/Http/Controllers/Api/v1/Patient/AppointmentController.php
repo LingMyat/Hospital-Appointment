@@ -13,10 +13,13 @@ class AppointmentController extends Controller
 {
     public function index(Request $request)
     {
-        $appointments = Appointment::patientIn($request->user()->id)
-            ->with('patient', 'doctor', 'doctorTime')
-            ->orderBy('id', 'desc')
-            ->get();
+        $query = Appointment::patientIn($request->user()->id)
+        ->with('patient', 'doctor', 'doctorTime')
+        ->orderBy('id', 'desc');
+        if ($request->status) {
+            $query->where('status',$request->status);
+        }
+        $appointments = $query->get();
         if ($request->appointment_id) {
             return ResponseHelper::success(new PatientAppointmentResource(Appointment::findOrFail($request->appointment_id)));
         }
