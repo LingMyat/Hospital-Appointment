@@ -30,40 +30,44 @@ class RoomController extends Controller
     {
         $room = Room::findOrFail($id);
         $messages = LiveChatMessage::roomIn($id)->onlyParent()->with('room','patient','doctor','media')->get();
-        $lastMessage = LiveChatMessage::orderBy('id','desc')->first();
+        $lastMessage = LiveChatMessage::roomIn($id)->orderBy('id','desc')->first();
         $data = [
             'room'=>new RoomResource($room),
             'messages'=>RoomMessageResource::collection($messages),
-            'last_sender'=>$lastMessage->sender_role=='doctor0'?new RoomMessageSenderResource($lastMessage->doctor):new RoomMessageSenderResource($lastMessage->patient)
         ];
+        if ($lastMessage) {
+            $data['last_sender'] = $lastMessage->sender_role=='doctor0'?new RoomMessageSenderResource($lastMessage->doctor):new RoomMessageSenderResource($lastMessage->patient);
+        }
+        
         return ResponseHelper::success($data);
     }
 
     public function storeRoomMessage(Request $request)
     {
-
         $lastMessage = LiveChatMessage::orderBy('id','desc')->roomIn($request->room_id)->first();
-        if ($lastMessage->sender_id == $request->user()->id && $lastMessage->sender_role == $request->user()->role) {
-            $parent = LiveChatMessage::roomIn($request->room_id)
-            ->where('sender_id', $request->user()->id)
-            ->onlyParent()
-            ->orderBy('id','desc')
-            ->first();
+        if ($lastMessage) {
+            if ($lastMessage->sender_id == $request->user()->id && $lastMessage->sender_role == $request->user()->role) {
+                $parent = LiveChatMessage::roomIn($request->room_id)
+                ->where('sender_id', $request->user()->id)
+                ->onlyParent()
+                ->orderBy('id','desc')
+                ->first();
+                $message = LiveChatMessage::create([
+                    'room_id'=>$request->room_id,
+                    'sender_id'=>$request->user()->id,
+                    'message'=>$request->message,
+                    'sender_role'=>$request->user()->role,
+                    'parent_id'=>$parent->id
+                ]);
+                return ResponseHelper::success($message);
+            }
+        }
             $message = LiveChatMessage::create([
                 'room_id'=>$request->room_id,
                 'sender_id'=>$request->user()->id,
-                'message'=>$request->message,
                 'sender_role'=>$request->user()->role,
-                'parent_id'=>$parent->id
+                'message'=>$request->message,
             ]);
-            return ResponseHelper::success($message);
-        }
-        $message = LiveChatMessage::create([
-            'room_id'=>$request->room_id,
-            'sender_id'=>$request->user()->id,
-            'sender_role'=>$request->user()->role,
-            'message'=>$request->message,
-        ]);
         return ResponseHelper::success(new RoomMessageResource($message));
     }
 
