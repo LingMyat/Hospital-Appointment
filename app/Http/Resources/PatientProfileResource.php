@@ -23,6 +23,7 @@ class PatientProfileResource extends JsonResource
             'image' => $this->image,
             'gender' => $this->gender,
             'address' => $this->address,
+            'role' => $this->role,
             'nrc_number'=>$this->NRC,
             'nrc_info'=>new NrcResurce($this->nrc),
         ];

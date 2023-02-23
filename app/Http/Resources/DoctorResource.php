@@ -47,6 +47,7 @@ class DoctorResource extends JsonResource
             'phone' => $this->phone,
             'email' => $this->email,
             'biography' => $this->biography,
+            'role' => $this->role,
             'times' => $times
         ];
     }
