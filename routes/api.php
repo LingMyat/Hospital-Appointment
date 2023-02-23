@@ -46,7 +46,19 @@ Route::controller(DiseaseContrller::class)
         Route::get('sub-diagnosis', 'subDisease');
     });
 
-Route::controller(RoomController::class)
+// Route::controller(RoomController::class)
+//     ->prefix('v1/rooms')
+//     ->group(function () {
+//         Route::get('/', 'index');
+//         Route::middleware('auth:sanctum')
+//             ->group(function () {
+//                 Route::get('{id}/room-messages', 'roomMessages');
+//                 Route::post('store-room-message', 'storeRoomMessage');
+//                 Route::post('store-chat-image', 'storeChatImage');
+//             });
+//     });
+
+    Route::controller(RoomController::class)
     ->prefix('v1/rooms')
     ->group(function () {
         Route::get('/', 'index');
